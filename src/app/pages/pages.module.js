@@ -8,22 +8,18 @@
     angular.module('BlurAdmin.pages', [
         'ui.router',
 
-        'BlurAdmin.pages.dashboard',
-        'BlurAdmin.pages.profile',
+        'BlurAdmin.pages.inteligentWifi',
         'BlurAdmin.pages.advertisings',
-        'BlurAdmin.pages.connected',
-        'BlurAdmin.pages.emailmk',
+        'BlurAdmin.pages.emailMarketing',
         'BlurAdmin.pages.emarketing',
-        'BlurAdmin.pages.license',
-        'BlurAdmin.pages.charts',
-        'BlurAdmin.pages.reports',
-        'BlurAdmin.pages.sms',
+        'BlurAdmin.pages.smsMarketing',
+        'BlurAdmin.pages.sms'
     ])
         .config(routeConfig);
 
     /** @ngInject */
     function routeConfig($urlRouterProvider, baSidebarServiceProvider) {
-        $urlRouterProvider.otherwise('/dashboard');
+        $urlRouterProvider.otherwise('/inteligentWifi/dashboard');
 
         baSidebarServiceProvider.addStaticItem({
             title: 'Campanhas',
