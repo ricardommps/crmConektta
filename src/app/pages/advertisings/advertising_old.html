@@ -1,0 +1,101 @@
+<div class="widgets">
+  <form name="vm.personalInfoForm" novalidate>
+    <div ba-panel ba-panel-title="DADOS DA CAMPANHA" ba-panel-class="with-scroll">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group has-feedback"
+              ng-class="{'has-error': vm.personalInfoForm.title.$invalid && (vm.personalInfoForm.title.$dirty || vm.personalInfoForm.$submitted)}">
+              <label for="exampleUsername1">Título da campanha</label>
+              <input type="text" class="form-control" id="title" name="title" placeholder="Título" ng-model="vm.personalInfo.title" required>
+              <span class="help-block error-block basic-block">Required</span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group" ng-class="{'has-error': vm.personalInfoForm.link.$invalid && (vm.personalInfoForm.link.$dirty || vm.personalInfoForm.$submitted)}">
+              <label for="exampleInputEmail1">Link da propaganda</label>
+              <input type="text" class="form-control" id="exampleInputEmail1" name="link" placeholder="Link" ng-model="vm.personalInfo.link" required>
+              <span class="help-block error-block basic-block">Required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group" ng-class="{'has-error': vm.personalInfoForm.description.$invalid && (vm.personalInfoForm.description.$dirty || vm.personalInfoForm.$submitted)}">
+              <label for="exampleInputPassword1">Descrição dacampanha</label>
+              <input type="text" class="form-control" id="description" name="description" placeholder="Descrição" ng-model="vm.personalInfo.description" required>
+              <span class="help-block error-block basic-block">Required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12" style="padding: 0px;">
+      <div class="col-md-6">
+        <div ba-panel ba-panel-title="Imagem do Anuncio" ba-panel-class="with-scroll">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="dropZone" style="">
+                  <h4 style="padding: 10px;">
+                    Arraste e solte sua imagem aqui
+                  </h4>
+                  <p>
+                  </p>
+                  <p>
+                    <div class="button-wrapper"><button type="button" class="btn btn-primary">ou carregue sua imagem</button></div>
+                  </p>
+                  Tamanh sugerido: 700x700 px 
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div ba-panel ba-panel-title="Imagem do Anuncio" ba-panel-class="with-scroll">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group has-feedback"
+                ng-class="{'has-error': vm.personalInfoForm.username.$invalid && (vm.personalInfoForm.username.$dirty || vm.personalInfoForm.$submitted)}">
+                <label for="exampleUsername1">Username</label>
+                <input type="text" class="form-control" id="exampleUsername1" name="username" placeholder="Username" ng-model="vm.personalInfo.username" required>
+                <span class="help-block error-block basic-block">Required</span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group" ng-class="{'has-error': vm.personalInfoForm.email.$invalid && (vm.personalInfoForm.email.$dirty || vm.personalInfoForm.$submitted)}">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" name="email" placeholder="Email" ng-model="vm.personalInfo.email" required>
+                <span class="help-block error-block basic-block">Proper email required</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-12">
+
+            </div>
+          </div>
+        </div>
+       </div> 
+    </div>
+  </div>
+</div>
+</div>
+
+</form>
+</div>

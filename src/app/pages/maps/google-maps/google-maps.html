@@ -1,0 +1,57 @@
+<div ba-panel ba-panel-title="Google Maps" class="viewport100">
+	<div class="row">
+	<label for="exampleUsername1" style="padding-left: 12px;">Título da campanha</label>
+		<div class="input-group">
+			<div class="col-md-6">
+				 <input type="radio" id="radio1" name="radios" value="all" checked>
+			       <label for="radio1">Todos</label>
+			    <input type="radio" id="radio2" name="radios" value="false">
+			       <label for="radio2">Homens</label>
+			    <input type="radio" id="radio3" name="radios" value="true">
+			       <label for="radio3">Mulheres</label>
+			</div>
+		</div>
+	</div>
+	<div class="row" style="padding-left: 12px;">
+		<div class="slider-box">
+        <h5>Idade</h5>
+        <ion-slider type="single"
+                    grid="false"
+                    min="0"
+                    max="100"
+                    from="45"
+                    disable="false">
+        </ion-slider>
+      </div>
+
+	</div>
+<div class="input-group">
+	<input type="text" ng-model="vm.city" class="form-control with-danger-addon" placeholder="Search for...">
+	<span class="input-group-btn">
+		<button class="btn btn-danger" type="button" ng-click="vm.addCity()">Adicionar</button>
+	</span>
+</div>
+<div class="horizontal-scroll">
+	<table class="table table-hover" cellpadding="100">
+		<tbody>
+			<tr ng-repeat="item in vm.locations" class="no-top-border">
+				<td ng-class="align-left" style="text-align: left;">{{item.formatted_address}}
+					<div style="width: 200px;min-height: 36px;">
+						<input type="range" min="0" max="100" ng-model="item.radius" 
+						ng-change="vm.updateItem(item)"/>
+					</div>
+
+				</td>
+				<td class="table-arr">
+					<span class="delete pull-right glyphicon glyphicon-remove" 
+					ng-click="vm.removeCity( item)">
+				</span>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+<div id="google-maps"></div>
+</div>
+
+<button class="btn btn-danger" type="button" ng-click="vm.save()">Salvar</button>

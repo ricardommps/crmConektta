@@ -1,0 +1,31 @@
+<section>
+	<div class="row">
+		<div class="col-md-12">
+			<div ba-panel ba-panel-title="Usuários" ba-panel-class="with-scroll">
+				<dashboard-bar-chart></dashboard-bar-chart>
+	      	</div>
+	    </div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div ba-panel ba-panel-title="Usuários por Gênero" ba-panel-class="with-scroll">
+				<div class="col-md-8">
+					<div class="chartist">
+						<div id="stacked-bar" class="ct-chart stacked-bar"></div>
+	        			legenda 
+	        			<div id="myCanvas" style="border:1px solid #000000; width:10px; height:10px;"></div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div
+			            donut-chart
+			            donut-data='donutData'
+			            donut-colors='colors'
+			            donut-formatter="vm.myFormatter">
+			        </div>
+				</div>
+
+	      	</div>
+	    </div>
+	</div>
+</section>

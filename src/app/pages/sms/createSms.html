@@ -1,0 +1,134 @@
+<div class="widgets">
+  <div class="row">
+    <div class="col-md-9">
+      <div ba-panel ba-panel-title="Campanha" ba-panel-class="with-scroll">
+        <ba-wizard>
+          <ba-wizard-step title="Dados da Campanha" form="vm.personalInfoForm">
+            <form name="vm.personalInfoForm" novalidate>
+              <div class="row">
+                <div class="col-md-12">
+                 <div class="form-group has-feedback"
+                 ng-class="{'has-error': vm.personalInfoForm.title.$invalid && (vm.personalInfoForm.title.$dirty || vm.personalInfoForm.$submitted)}">
+                 <label for="exampleUsername1">Título da campanha</label>
+                 <input type="text" class="form-control" id="title" name="title" placeholder="Título" ng-model="vm.personalInfo.title" required>
+                 <span class="help-block error-block basic-block">Required</span>
+               </div>
+             </div>
+           </div>
+         </form>
+       </ba-wizard-step>
+       <ba-wizard-step title="Opçoes de segmentação" form="vm.productInfoForm">
+        <div class="input-group">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
+          </span>
+          <select ng-model="selected" ng-options="item as item.name for item in vm.list"
+          class="form-control" title="Lista de Contatos">
+        </select>
+      </div>
+      <div class="horizontal-scroll">
+        <div class="form-group select-page-size-wrap ">
+          <label>Rows on page
+            <select class="form-control selectpicker show-tick" title="Rows on page" selectpicker
+            ng-model="vm.smartTablePageSize" ng-options="i for i in [5,10,15,20,25]">
+          </select>
+        </label>
+      </div>
+      <div class="table-container">
+        <table class="table" st-table="vm.smartTableData" >
+          <thead>
+            <tr class="sortable ">
+              <th class="table-id" st-sort="id" st-sort-default="true">#</th>
+              <th st-sort="firstName">Nome</th>
+              <th st-sort="lastName">Idade</th>
+              <th st-sort="username">Genero</th>
+              <th st-sort="email">Pontos de acesso</th>
+              <th st-sort="age">Data de cadastro</th>
+              <th></th>
+            </tr>
+            <tr>
+              <th></th>
+              <th><input st-search="nome" placeholder="Busca por nome" class="input-sm form-control search-input"
+               type="search"/></th>
+               <th><input st-search="idade" placeholder="Busca por idade" class="input-sm form-control search-input"
+                 type="search"/></th>
+                 <th><input st-search="genero" placeholder="Busca por genero" class="input-sm form-control search-input"
+                   type="search"/></th>
+                   <th><input st-search="pontos" placeholder="Busca por ponto" class="input-sm form-control search-input" type="search"/>
+                   </th>
+                   <th><input st-search="datacad" placeholder="Busca por data" class="input-sm form-control search-input" type="search"/>
+                   </th>
+                 </tr>
+               </thead>
+               <tbody>
+                <tr st-select-row="row" st-select-mode="multiple" 
+                ng-repeat="row in vm.smartTableData">
+                <td><input type="checkbox" ng-model="selected" 
+                  ng-change="vm.changeValue(selected,row)"/></td>
+                  <td>{{row.nome}}</td>
+                  <td>{{row.idade}}</td>
+                  <td>{{row.genero}}</td>
+                  <td>{{row.pontos}}</a></td>
+                  <td>{{row.datacad}}</td>
+                  <td>
+                    <div class="row">
+                      <button type="button" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
+                      <button type="button" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"></span></button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="6" class="text-center">
+                    <div st-pagination="" st-items-by-page="vm.smartTablePageSize" st-displayed-pages="5"></div>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+        <div>
+          <button type="button" class="btn btn-info">Adicionar Contatos</button>
+          <button type="button" class="btn btn-info" ng-click=vm.createListSms()>Criar Lista</button>
+        </div>
+
+      </ba-wizard-step>
+      <ba-wizard-step title="Customização"  form="vm.customSms">
+         <form class="form-horizontal" name="vm.customSms" novalidate>
+            <h1>Escreva conteúdo do seu SMS </h1>
+            <p>Escreva abaixo o texto que você deseja enviar para sua base de contatos.</p>
+            <textarea ng-model="smsMessage" class="form-control" id="smsMessage" rows="10"
+                  placeholder="Digite o Texto do seu SMS. "></textarea>
+        </form> 
+      
+
+      </ba-wizard-step>
+      <ba-wizard-step title="Salvar">
+        <form class="form-horizontal" name="vm.finishForm" novalidate>
+          Aqui vai um preview do Sms Criado
+        </form>
+      </ba-wizard-step>
+    </ba-wizard>
+  </div>
+</div>
+<div class="col-md-3">
+  <div ba-panel ba-panel-title="Informações" ba-panel-class="with-scroll">
+    <h2>Alcance</h2>
+    <p>
+      Acompanhe quantas pessoas irão receber a sua campanha de E-mail Marketin
+    </p>
+    <h4>50.000 pessoas</h4>
+    <div class="progress">
+      <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
+        <span class="sr-only">50% Complete (danger)</span>
+      </div>
+    </div>
+    <h3>Orçamento</h3>
+    <h1>R$150,00</h1>
+    <p>Este é o valor total para você enviar para o alcance.</p>
+  </div>
+</div>
+</div>
+
+</div>
