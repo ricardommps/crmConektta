@@ -18,6 +18,8 @@
                                        ng-disabled="false"
                                        search-enabled="true"
                                        append-to-body="true"
+                                       on-select="someFunction($item)"
+                                       on-remove="removeFunction($item)"
                                        class="form-control ">
                                 <ui-select-match placeholder="Multiple Select">
                                     {{$item.name}}
@@ -53,7 +55,12 @@
                             </div>
                             <div class="col-md-6">
                                 <form>
-                                    <button type="button" class="btn btn-info" ng-click=vm.send()>Enviar Campanha</button>
+                                    <div class="row">
+                                        <button type="button" class="btn btn-info" ng-click=vm.create()>Salvar e enviar depois</button><br>
+                                    </div>
+                                    <div class="row" style="margin-top: 10px;">
+                                        <button type="button" class="btn btn-info" ng-click=vm.send()>Enviar Campanha</button>
+                                    </div>
                                 </form>
                             </div>
 
@@ -64,12 +71,12 @@
             </div>
         </div>
         <div class="col-md-3">
-            <div ba-panel ba-panel-title="Informações" ba-panel-class="with-scroll">
+            <div ba-panel ba-panel-class="with-scroll">
                 <h2>Alcance</h2>
                 <p>
                     Acompanhe quantas pessoas irão receber a sua campanha de E-mail Marketin
                 </p>
-                <h4>50.000 pessoas</h4>
+                <h4 style="font-size: 15px;">{{vm.totalEmails}} pessoas</h4>
                 <div class="progress">
                     <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
                         <span class="sr-only">50% Complete (danger)</span>

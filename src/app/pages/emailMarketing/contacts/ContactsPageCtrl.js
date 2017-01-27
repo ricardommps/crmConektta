@@ -30,7 +30,7 @@
         function _openSaveModal() {
             $uibModal.open({
                 animation: true,
-                templateUrl: "app/pages/emailmk/contacts/contactsModal.html",
+                templateUrl: "app/pages/emailMarketing/contacts/contactsModal.html",
                 controller: ContactsModalCtrl,
                 controllerAs: 'vm',
                 size: 'md',

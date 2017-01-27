@@ -13,7 +13,7 @@
         $stateProvider
             .state('smsMarketing.advertising', {
                 url: '/advertising',
-                templateUrl: 'app/pages/smsMarketing/advertising/advertising.html',
+                templateUrl: 'app/pages/smsMarketing/advertising/addAdvertising.html',
                 title: 'Campanha',
                 controller: 'AdvertisingPageCtrl',
                 controllerAs: 'vm',

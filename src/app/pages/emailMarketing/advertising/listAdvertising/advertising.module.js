@@ -13,9 +13,9 @@
         $stateProvider
             .state('emailMarketing.advertising', {
                 url: '/advertising',
-                templateUrl: 'app/pages/emailMarketing/advertising/advertising.html',
-                title: 'Campanha',
-                controller: 'AdvertisingPageCtrl',
+                templateUrl: 'app/pages/emailMarketing/advertising/listAdvertising/advertising.html',
+                title: 'Campanhas',
+                controller: 'advertisingPageCtrl',
                 controllerAs: 'vm',
                 sidebarMeta: {
                     order: 0,

@@ -6,6 +6,7 @@
     'use strict';
 
     angular.module('BlurAdmin.pages.emailMarketing', ['ui.select', 'ngSanitize',
+        'BlurAdmin.pages.emailMarketing.addAdvertising',
         'BlurAdmin.pages.emailMarketing.advertising',
         'BlurAdmin.pages.emailMarketing.contacts',
         'BlurAdmin.pages.emailMarketing.contactsList'
@@ -22,7 +23,7 @@
                 title: 'E-mail Marketing',
                 sidebarMeta: {
                     icon: 'ion-stats-bars',
-                    order: 150,
+                    order: 160,
                 },
             });
     }

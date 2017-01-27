@@ -1,0 +1,36 @@
+<div class="table-container">
+    <table class="table" st-table="vm.campaigns" >
+        <thead>
+        <tr class="sortable ">
+            <th st-sort="title">Nome</th>
+            <th st-sort="subject">Assunto</th>
+            <th st-sort="status">Status</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr st-select-row="row" st-select-mode="multiple"
+            ng-repeat="row in vm.campaigns">
+            <td>{{row.title | limitTo: 10}}</td>
+            <td>{{row.subject | limitTo: 10}}</td>
+            <td>{{row.status}}</td>
+            <td>
+                <div class="row" ng-if="row.status === 'Draft'">
+                    <button type="button" class="btn defaut btn-sm" ng-click="vm.sendEmail(row)">
+                        <span class="glyphicon glyphicon-send"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="6" class="text-center">
+                <div st-pagination="" st-items-by-page="vm.smartTablePageSize" st-displayed-pages="5"></div>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+    <button type="button" class="btn btn-info" ng-click = vm.openSaveModal()>Criar Lista</button>
+</div>
+</div>

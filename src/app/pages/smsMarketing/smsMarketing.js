@@ -19,10 +19,10 @@
                 url: '/smsMarketing',
                 abstract: true,
                 template: '<div ui-view  autoscroll="true" autoscroll-body-top></div>',
-                title: 'E-mail Marketing',
+                title: 'Sms',
                 sidebarMeta: {
                     icon: 'ion-stats-bars',
-                    order: 150,
+                    order: 170
                 },
             });
     }

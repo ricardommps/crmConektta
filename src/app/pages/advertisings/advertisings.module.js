@@ -9,7 +9,7 @@
     $stateProvider
         .state('advertising', {
           url: '/advertising',
-          templateUrl: 'app/pages/advertisings/advertising.html',
+          templateUrl: 'app/pages/advertisings/addAdvertising.html',
           title: 'Campanha',
           controller: 'AdvertisdCtrl',
           controllerAs: 'vm',
