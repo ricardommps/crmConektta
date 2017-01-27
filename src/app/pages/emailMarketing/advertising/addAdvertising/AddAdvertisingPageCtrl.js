@@ -8,7 +8,7 @@
         .controller('AddAdvertisingPageCtrl', AddAdvertisingPageCtrl);
 
 
-    function AddAdvertisingPageCtrl($scope, ContactsListService, AddAdvertisingService) {
+    function AddAdvertisingPageCtrl($scope, ContactsListService, AddAdvertisingService, $state) {
         var vm = this;
         vm.advertising={};
         vm.totalEmails = 0;
@@ -41,7 +41,38 @@
         };
         
         function _create() {
-            
+            vm.list_ids =[];
+            for(var i=0; i<vm.listsIds.length;i++){
+                vm.list_ids.push(vm.listsIds[i].id);
+            }
+            var json =
+                {
+                    "title": vm.advertising.title,
+                    "subject": vm.advertising.subject,
+                    "sender_id": 100787,
+                    "list_ids": vm.list_ids,
+                    "categories": [
+                        "spring line"
+                    ],
+                    "suppression_group_id": 2321,
+                    "custom_unsubscribe_url": "",
+                    "html_content": vm.advertising.html_content + "<a href='[unsubscribe]'>Click Here to Unsubscribe</a>",
+                    "plain_content": "Check out our spring line! [unsubscribe]"
+                };
+
+            AddAdvertisingService.createCampaigns(json)
+                .then(function(res) {
+                    if(res.id >0){
+                        console.log("sucesso");
+                        $state.go('emailMarketing.advertising');
+                    }else{
+                        console.log("erro");
+                    }
+
+                },function(data) {
+                    console.log("ERROR");
+                    //modal();
+                })
         }
         function countEmails(contact) {
             angular.forEach(contact, function(value1, key1) {
