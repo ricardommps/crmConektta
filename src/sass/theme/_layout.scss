@@ -345,10 +345,57 @@ input[type=radio] + label, input[type=checkbox] + label {
 .preview__conektta-logo a {
   display: inline-block;
   position: absolute;
-  top: 18px;
+  top: 16px;
   text-indent: -9999px;
-  height: 18px;
+  height: 40px;
   width: 152px;
-  background: url( $images-root + 'conektta.png');
-  background-size: 152px 18px;
+  background: url(../assets/img/conektta.png);
+  background-size: 120px;
+  margin-left: 15px;
+  background-repeat: no-repeat;
+}
+
+md-content[flex] {
+  height: 100%;
+  background: #363795 !important;
+  background: -webkit-linear-gradient(to left, #363795 , #005c97) !important;
+  background: linear-gradient(to left, #363795 , #005c97) !important;
+}
+.login-form {
+  font: 16px/2em Lato, serif;
+  margin: 100px auto;
+  max-width: 600px;
+  padding: 34px;
+}
+
+form[role=login] {
+  color: #5d5d5d;
+  background: #f2f2f2;
+  padding: 26px;
+  border-radius: 10px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+}
+
+form[role=login] img {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 35px;
+}
+
+.center-block {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.logo-login {
+  margin-top: 50px !important;
+  margin-bottom: 50px !important;
+}
+
+.pageLogin{
+  background: linear-gradient(to left, #363795 , #005c97) !important;
+  width: 100%;
+  height: 100%;
 }

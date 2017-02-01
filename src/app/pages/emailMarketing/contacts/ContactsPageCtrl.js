@@ -8,24 +8,40 @@
         .controller('ContactsPageCtrl', ContactsPageCtrl);
 
 
-    function ContactsPageCtrl($scope, ContactsService, $uibModal) {
+    function ContactsPageCtrl($scope, ContactsService, $uibModal, $timeout) {
         var vm = this;
         vm.contacts = {};
         vm.rowSelects=[];
         vm.nameList = "";
 
+        vm.displayContcts = false;
+        vm.displayContctsError = false;
+
         vm.changeValue = _changeValue;
         vm.openSaveModal = _openSaveModal;
 
-        ContactsService.listContacts()
-            .then(function(res) {
-                vm.contacts = JSON.parse(res);
-                console.log(vm.contacts);
+        $scope.$on("refreshListContacts",function () {
+            vm.displayContcts = false;
+            vm.displayContctsError = false;
+            listContacts();
+        });
 
-            },function(data) {
-                console.log("ERROR");
-                //modal();
-            })
+        function listContacts() {
+            ContactsService.listContacts()
+                .then(function(res) {
+                    var json = JSON.parse(res);
+                    vm.contacts = json.data;
+                    vm.displayContcts = true;
+                    vm.displayContctsError = false;
+
+                },function(data) {
+                    console.log("ERROR");
+                    vm.displayContcts = false;
+                    vm.displayContctsError = true;
+                })
+        }
+
+        $timeout(listContacts, 1000);
 
         function _openSaveModal() {
             $uibModal.open({
@@ -61,7 +77,7 @@
 
     }
 
-    function ContactsModalCtrl($scope, $uibModalInstance, contacts, ContactsService ) {
+    function ContactsModalCtrl($scope, $rootScope, $uibModalInstance, contacts, ContactsService, toastr ) {
         var vm = this;
         vm.createList = _createList;
         function _createList() {
@@ -73,7 +89,9 @@
             ContactsService.contactdb(jsonList)
                 .then(function(res) {
                     if(res.status == "200"){
+                        toastr.success('Lista de contatos criada com sucesso!');
                         $uibModalInstance.close($scope.link);
+                        $rootScope.$broadcast("refreshListContacts");
                     }
                     console.log(res);
 

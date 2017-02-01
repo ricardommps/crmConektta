@@ -11,7 +11,7 @@
     /** @ngInject */
     function routeConfig($stateProvider) {
         $stateProvider
-            .state('smsMarketing.advertising', {
+            .state('home.smsMarketing.advertising', {
                 url: '/advertising',
                 templateUrl: 'app/pages/smsMarketing/advertising/addAdvertising.html',
                 title: 'Campanha',

@@ -7,12 +7,12 @@
     /** @ngInject */
     function routeConfig($stateProvider) {
         $stateProvider
-            .state('inteligentWifi.public', {
+            .state('home.inteligentWifi.public', {
                 url: '/public',
                 templateUrl: 'app/pages/inteligentWifi/public/public.html',
                 title: 'Publico',
                 sidebarMeta: {
-                    order: 0,
+                    order: 0
                 },
             });
     }

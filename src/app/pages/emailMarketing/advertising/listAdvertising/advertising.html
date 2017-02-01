@@ -1,4 +1,9 @@
-<div class="table-container">
+<div class="modal-buttons same-width clearfix">
+</div>
+<div ng-if="!vm.displayCampaigns && !vm.displayCampaignsError">
+    Carregando informações...
+</div>
+<div class="table-container" ng-if="vm.displayCampaigns && !vm.displayCampaignsError">
     <table class="table" st-table="vm.campaigns" >
         <thead>
         <tr class="sortable ">

@@ -8,7 +8,7 @@
         .controller('AddAdvertisingPageCtrl', AddAdvertisingPageCtrl);
 
 
-    function AddAdvertisingPageCtrl($scope, ContactsListService, AddAdvertisingService, $state) {
+    function AddAdvertisingPageCtrl($scope, ContactsListService, AddAdvertisingService, $state, toastr) {
         var vm = this;
         vm.advertising={};
         vm.totalEmails = 0;
@@ -64,12 +64,15 @@
                 .then(function(res) {
                     if(res.id >0){
                         console.log("sucesso");
+                        toastr.success('Campanha criada com sucesso!');
                         $state.go('emailMarketing.advertising');
                     }else{
+                        toastr.error("Erro ao criar campanha", 'Error');
                         console.log("erro");
                     }
 
                 },function(data) {
+                    toastr.error("Erro ao criar campanha", 'Error');
                     console.log("ERROR");
                     //modal();
                 })
@@ -156,8 +159,11 @@
             AddAdvertisingService.createAndSendEmailMk(json)
                 .then(function(res) {
                     if(res.status === "Scheduled"){
-                        console.log("sucesso");
+                        toastr.success('Campanha enviada com sucesso!');
+                        $state.go('emailMarketing.advertising');
                     }else{
+                        toastr.error("Erro ao enviar campanha!", 'Error');
+                        _create();
                         console.log("erro");
                     }
 

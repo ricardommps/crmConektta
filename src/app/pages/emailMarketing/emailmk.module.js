@@ -16,7 +16,7 @@
     /** @ngInject */
     function routeConfig($stateProvider) {
         $stateProvider
-            .state('emailMarketing', {
+            .state('home.emailMarketing', {
                 url: '/emailMarketing',
                 abstract: true,
                 template: '<div ui-view  autoscroll="true" autoscroll-body-top></div>',

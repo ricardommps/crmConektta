@@ -11,7 +11,7 @@
     /** @ngInject */
     function routeConfig($stateProvider) {
         $stateProvider
-            .state('smsMarketing.contactsList', {
+            .state('home.smsMarketing.contactsList', {
                 url: '/contactsList',
                 templateUrl: 'app/pages/smsMarketing/contactsList/contactsList.html',
                 title: 'Lista de Contatos',

@@ -7,7 +7,8 @@
 
     angular.module('BlurAdmin.pages', [
         'ui.router',
-
+        'BlurAdmin.signin',
+        'BlurAdmin.pages.sides',
         'BlurAdmin.pages.inteligentWifi',
         'BlurAdmin.pages.advertisings',
         'BlurAdmin.pages.emailMarketing',
@@ -19,22 +20,9 @@
 
     /** @ngInject */
     function routeConfig($urlRouterProvider, baSidebarServiceProvider) {
-        $urlRouterProvider.otherwise('/inteligentWifi/dashboard');
+       // $urlRouterProvider.otherwise('/inteligentWifi/dashboard');
+        $urlRouterProvider.otherwise('/signin');
 
-        baSidebarServiceProvider.addStaticItem({
-            title: 'Campanhas',
-            icon: 'ion-arrow-graph-up-right',
-            subMenu: [{
-                title: 'Banner',
-                stateRef: 'advertising'
-            }, {
-                title: 'SMS',
-                stateRef: 'sms'
-            }, {
-                title: 'E-Marketing',
-                stateRef: 'emarketing'
-            }]
-        });
     }
 
 })();

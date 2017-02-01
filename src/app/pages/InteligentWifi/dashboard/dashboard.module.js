@@ -5,17 +5,18 @@
         .config(routeConfig);
 
     /** @ngInject */
-    function routeConfig($stateProvider) {
+    function routeConfig($stateProvider,$urlRouterProvider, $locationProvider) {
         $stateProvider
-            .state('inteligentWifi.dashboard', {
+            .state('home.inteligentWifi.dashboard', {
                 url: '/dashboard',
                 templateUrl: 'app/pages/inteligentWifi/dashboard/dashboard.html',
                 title: 'Principal',
                 sidebarMeta: {
                     icon: 'ion-android-home',
-                    order: 0,
+                    order: 0
                 },
             });
+        //$urlRouterProvider.otherwise('/inteligentWifi/dashboard');
     }
 
 })();

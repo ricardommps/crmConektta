@@ -1,4 +1,8 @@
-<div class="table-container">
+<div ng-if="!vm.displayContcts && !vm.displayContctsError">
+    Carregando informações...
+</div>
+
+<div class="table-container" ng-if="vm.displayContcts && !vm.displayContctsError">
     <table class="table" st-table="vm.contacts" >
         <thead>
         <tr class="sortable ">
@@ -13,7 +17,7 @@
         </thead>
         <tbody>
         <tr st-select-row="row" st-select-mode="multiple"
-            ng-repeat="row in vm.contacts.data">
+            ng-repeat="row in vm.contacts">
             <td><input type="checkbox" ng-model="selected"
                        ng-change="vm.changeValue(selected,row)"/></td>
             <td>{{row.first_name}}</td>

@@ -5,7 +5,7 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.inteligentWifi', ['ui.select', 'ngSanitize',
+    angular.module('BlurAdmin.pages.inteligentWifi', [
         'BlurAdmin.pages.inteligentWifi.dashboard',
         'BlurAdmin.pages.inteligentWifi.public'
     ])
@@ -14,14 +14,14 @@
     /** @ngInject */
     function routeConfig($stateProvider) {
         $stateProvider
-            .state('inteligentWifi', {
+            .state('home.inteligentWifi', {
                 url: '/inteligentWifi',
                 abstract: true,
                 template: '<div ui-view  autoscroll="true" autoscroll-body-top></div>',
                 title: 'InteligentWifi',
                 sidebarMeta: {
                     icon: 'ion-stats-bars',
-                    order: 150,
+                    order: 120,
                 },
             });
     }
