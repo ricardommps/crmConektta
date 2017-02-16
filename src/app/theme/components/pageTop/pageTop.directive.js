@@ -14,7 +14,7 @@
             restrict: 'E',
             templateUrl: 'app/theme/components/pageTop/pageTop.html',
             controller: 'PageTopCtrl',
-            controllerAs: 'vm',
+            controllerAs: 'vm'
         };
     }
 

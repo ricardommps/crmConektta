@@ -9,104 +9,99 @@
       .controller('MsgCenterCtrl', MsgCenterCtrl);
 
   /** @ngInject */
-  function MsgCenterCtrl($scope, $sce) {
-    $scope.users = {
-      0: {
-        name: 'Vlad',
-      },
-      1: {
-        name: 'Kostya',
-      },
-      2: {
-        name: 'Andrey',
-      },
-      3: {
-        name: 'Nasta',
-      }
-    };
+  function MsgCenterCtrl($scope, $sce, credits, UserInfo, $rootScope,socket, $window, toastr) {
+      var vm = this;
+      vm.balanceSms = 0;
+      vm.balanceEmail = 0;
 
-    $scope.notifications = [
-      {
-        userId: 0,
-        template: '&name posted a new article.',
-        time: '1 min ago'
-      },
-      {
-        userId: 1,
-        template: '&name changed his contact information.',
-        time: '2 hrs ago'
-      },
-      {
-        image: 'assets/img/shopping-cart.svg',
-        template: 'New orders received.',
-        time: '5 hrs ago'
-      },
-      {
-        userId: 2,
-        template: '&name replied to your comment.',
-        time: '1 day ago'
-      },
-      {
-        userId: 3,
-        template: 'Today is &name\'s birthday.',
-        time: '2 days ago'
-      },
-      {
-        image: 'assets/img/comments.svg',
-        template: 'New comments on your post.',
-        time: '3 days ago'
-      },
-      {
-        userId: 1,
-        template: '&name invited you to join the event.',
-        time: '1 week ago'
+      var user = JSON.parse($window.localStorage.getItem('conekttaUser'));
+      if(user === null){
+          $state.go('signin');
       }
-    ];
+      var idUser = user[0].id;
 
-    $scope.messages = [
-      {
-        userId: 3,
-        text: 'After you get up and running, you can place Font Awesome icons just about...',
-        time: '1 min ago'
-      },
-      {
-        userId: 0,
-        text: 'You asked, Font Awesome delivers with 40 shiny new icons in version 4.2.',
-        time: '2 hrs ago'
-      },
-      {
-        userId: 1,
-        text: 'Want to request new icons? Here\'s how. Need vectors or want to use on the...',
-        time: '10 hrs ago'
-      },
-      {
-        userId: 2,
-        text: 'Explore your passions and discover new ones by getting involved. Stretch your...',
-        time: '1 day ago'
-      },
-      {
-        userId: 3,
-        text: 'Get to know who we are - from the inside out. From our history and culture, to the...',
-        time: '1 day ago'
-      },
-      {
-        userId: 1,
-        text: 'Need some support to reach your goals? Apply for scholarships across a variety of...',
-        time: '2 days ago'
-      },
-      {
-        userId: 0,
-        text: 'Wrap the dropdown\'s trigger and the dropdown menu within .dropdown, or...',
-        time: '1 week ago'
-      }
-    ];
+      var tpCredito = "sms";
 
-    $scope.getMessage = function(msg) {
-      var text = msg.template;
-      if (msg.userId || msg.userId === 0) {
-        text = text.replace('&name', '<strong>' + $scope.users[msg.userId].name + '</strong>');
+
+      userInfo();
+
+      socket.on('send:errorBalanceEmail', function (error) {
+          vm.balanceEmail = 0;
+          toastr.error(error, 'Error');
+      });
+
+      socket.on('send:sucessBalanceEmail', function (data) {
+          //printConsole("send:sucessBalanceEmail");
+          if(data === "Nao foi encontrado creditos para este usuario" ||
+            data === "parametro invalido"){
+              vm.balanceEmail = 0;
+          }else{
+              //printConsole(data);
+              vm.balanceEmail = parseFloat(data.split(':')[1].split('}')[0]).toFixed(2);
+          }
+      });
+
+      socket.on('send:errorBalanceSms', function (error) {
+          //printConsole("send:errorBalanceSms");
+          //printConsole(error);
+          vm.balanceSms = 0;
+          //userInfo();
+      });
+
+      socket.on('send:sucessBalanceSms', function (data) {
+          //printConsole("send:sucessBalanceSms");
+          if(data === "Nao foi encontrado creditos para este usuario" ||
+              data === "parametro invalido"){
+              vm.balanceSms = 0;
+          }else{
+              vm.balanceSms = parseFloat(data.split(':')[1].split('}')[0]).toFixed(2);
+          }
+      });
+
+
+
+
+      socket.on('send:sucessPostDebit', function (data) {
+          //printConsole("send:sucessPostDebit");
+          //printConsole(data);
+          //userInfo();
+      });
+
+      function userInfo() {
+          UserInfo.user()
+              .then(function(res) {
+                  idUser = res[0].id;
+                  balanceSMS();
+                  balanceEmail();
+
+              },function(data) {
+                  //printConsole("ERROR");
+                  //modal();
+              })
       }
-      return $sce.trustAsHtml(text);
-    };
+
+      function balanceSMS() {
+          var jsonEmail = {id:idUser};
+          socket.emit('send:balanceSms',jsonEmail);
+      }
+
+      function balanceEmail() {
+          var jsonEmail = {id:idUser};
+          socket.emit('send:balanceEmail',jsonEmail);
+         /* tpCredito = "email";
+          credits.balance(idUser,tpCredito)
+              .then(function(res) {
+                  if(res === "Nao foi encontrado creditos para este usuario"){
+                      vm.balanceEmail = 0;
+                  }else{
+                      vm.balanceEmail = parseFloat(res.split(':')[1].split('}')[0]).toFixed(2);
+                  }
+
+              },function(data) {
+                  //printConsole("ERROR");
+                  //modal();
+              })*/
+      }
+
   }
 })();

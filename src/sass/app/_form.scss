@@ -603,7 +603,7 @@ label.custom-input-danger {
 }
 
 .progress-bar-conektta {
-  background-color: #3769a2;
+  background-color: #1e3e8e;
 }
 
 .progress-bar-warning {
@@ -612,6 +612,10 @@ label.custom-input-danger {
 
 .progress-bar-danger {
   background-color: $danger;
+}
+
+.progress-bar-panel {
+  background-color: #80ab38;
 }
 
 .has-success .input-group-addon {

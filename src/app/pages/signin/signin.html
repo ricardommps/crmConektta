@@ -8,13 +8,13 @@
 
                 <div class="form-group" ng-class="{ 'has-error': loginForm.username.$touched && loginForm.username.$invalid }">
 
-                    <input type="text" name="username" placeholder="Username" required
+                    <input type="text" name="username" placeholder="Digite seu Usuário" required
                            class="form-control" ng-model="vm.formdata.username"/>
 
                 </div>
 
                 <div class="form-group" ng-class="{ 'has-error': loginForm.password.$touched && loginForm.password.$invalid }">
-                    <input type="password" name="password" placeholder="Password" required class="form-control" ng-model="vm.formdata.password"/>
+                    <input type="password" name="password" placeholder="Digite sua Senha" required class="form-control" ng-model="vm.formdata.password"/>
                 </div>
 
                 <button type="submit"

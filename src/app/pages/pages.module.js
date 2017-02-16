@@ -9,12 +9,10 @@
         'ui.router',
         'BlurAdmin.signin',
         'BlurAdmin.pages.sides',
-        'BlurAdmin.pages.inteligentWifi',
-        'BlurAdmin.pages.advertisings',
-        'BlurAdmin.pages.emailMarketing',
-        'BlurAdmin.pages.emarketing',
-        'BlurAdmin.pages.smsMarketing',
-        'BlurAdmin.pages.sms'
+        'BlurAdmin.pages.smartWifi',
+        'BlurAdmin.pages.sms',
+        'BlurAdmin.pages.email',
+        'BlurAdmin.pages.ads'
     ])
         .config(routeConfig);
 

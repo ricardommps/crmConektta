@@ -48,5 +48,8 @@
   "scripts": {
     "postinstall": "bower install",
     "start": "gulp serve"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4"
   }
 }

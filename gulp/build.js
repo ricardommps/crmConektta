@@ -128,7 +128,7 @@ gulp.task('publish', function() {
         // create a cache file to speed up consecutive uploads
         .pipe(publisher.cache())
 
-        // print upload updates to console
+        // //printConsole upload updates to console
         .pipe(awspublish.reporter());
 });
 

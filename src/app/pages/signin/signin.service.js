@@ -5,7 +5,7 @@
     angular.module('BlurAdmin.signin')
         .factory('SigninService', SigninService); //Define o nome a função do seu .service
 
-    function SigninService($q, $http, API_SANDGRID) {
+    function SigninService($q, $http, API_CRM) {
 
         var vm = this;
         vm.service ={
@@ -20,7 +20,9 @@
                 params: user,
                 headers : {'Accept' : 'application/json'}
             };
-            var url = API_SANDGRID.url+"login";
+            console.log(config);
+            var url = API_CRM.url+"login";
+            console.log(url);
             var def = $q.defer();
             $http.get(url,config)
                 .then(function(res){

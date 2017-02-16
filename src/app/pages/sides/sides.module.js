@@ -14,7 +14,7 @@
             .state('home', {
                 url: '/home',
                 templateUrl: 'app/pages/sides/sides.html',
-                redirectTo: 'home.inteligentWifi.dashboard'
+                redirectTo: 'home.smartWifi.dashboard'
 
             });
     }
