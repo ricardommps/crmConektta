@@ -1,0 +1,20 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="$dismiss()" aria-label="Close">
+            <em class="ion-ios-close-empty sn-link-close"></em>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">Lista de Contatos</h4>
+    </div>
+    <form name="linkForm">
+        <div class="modal-body">
+            <div ng-if="vm.contacts.length <1">
+                <h3>Carregando informaçoes...</h3>
+            </div>
+            <div class="list-group" ng-repeat="item in vm.contacts" style="margin-bottom: 0px;">
+                <a href="" ng-click="vm.openModal(item)" class="list-group-item list-group-item-success">
+                    Nome: {{item.first_name}} {{item.last_name}}
+                </a>
+            </div>
+        </div>
+    </form>
+</div>

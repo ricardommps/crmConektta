@@ -49,7 +49,8 @@
       });
 
       socket.on('send:sucessBalanceSms', function (data) {
-          //printConsole("send:sucessBalanceSms");
+          console.log("send:sucessBalanceSms");
+          console.log(data);
           if(data === "Nao foi encontrado creditos para este usuario" ||
               data === "parametro invalido"){
               vm.balanceSms = 0;

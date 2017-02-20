@@ -1,0 +1,61 @@
+<div class="modal-buttons same-width clearfix">
+</div>
+<div ng-if="!vm.displayCampaigns && !vm.displayCampaignsError">
+    Carregando informações...
+</div>
+<div ba-panel ba-panel-title="Campanhas" ba-panel-class="with-scroll" ng-if="vm.displayCampaigns && !vm.displayCampaignsError">
+    <div class="table-container">
+        <table class="table" st-table="vm.campaigns" >
+            <thead>
+            <tr class="sortable ">
+                <th st-sort="nome" style="text-align: left;">Nome</th>
+                <th st-sort="assunto" style="text-align: left;">Assunto</th>
+                <th st-sort="status" style="text-align: left;">Status</th>
+                <th st-sort="valor" style="text-align: left;">Custo</th>
+                <th>Ação</th>
+            </tr>
+            <tr>
+                <th>
+                    <input st-search="nome" placeholder="Busca por titulo" class="input-sm form-control search-input"
+                           type="search"/>
+                </th>
+                <th>
+                    <input st-search="assunto" placeholder="Busca por assunto" class="input-sm form-control search-input"
+                           type="search"/>
+                </th>
+                <th>
+                    <input st-search="status" placeholder="Busca por status" class="input-sm form-control search-input"
+                           type="search"/>
+                </th>
+                <th>
+                    <input st-search="valor" placeholder="Busca por valor" class="input-sm form-control search-input"
+                           type="search"/>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr st-select-row="row" st-select-mode="multiple"
+                ng-repeat="row in vm.campaigns">
+                <td style="text-align: left;">{{row.nome}}</td>
+                <td style="text-align: left;">{{row.assunto}}</td>
+                <td style="text-align: left;">{{row.status}}</td>
+                <td style="text-align: left;">{{row.valor}}</td>
+                <td style="text-align: left;">
+                    <div class="row" ng-if="row.status === 'Draft'">
+                        <button type="button" class="btn defaut btn-sm" ng-click="vm.sendEmail(row)">
+                            <span class="glyphicon glyphicon-send"></span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="6" class="text-center">
+                    <div st-pagination="" st-items-by-page="vm.smartTablePageSize" st-displayed-pages="5"></div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

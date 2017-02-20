@@ -30,13 +30,16 @@ https://email-verification.eu-west-1.amazonaws.com/?AWSAccessKeyId=AKIAJQA2TSFQT
 
             vm.advertising = {};
             vm.totalEmails = 0;
+            $scope.totalEmails = 0;
             vm.contactsLists = [];
             vm.send = _send;
-            vm.sendAwsSes = sendAwsSes;
-            vm.create = _create;
+            vm.sendAwsSes = _sendAwsSes;
+            vm.getCampanha = _getCampanha;
             vm.verifyEmailIdentity = _verifyEmailIdentity;
+            vm.selectItem = _selectItem;
 
             vm.totalPayable = 0;
+            $scope.totalPayable = 0;
             vm.disableSend = true;
             vm.placeholderSelect = "Carregando Lista...";
             vm.disableSelect = true;
@@ -47,10 +50,8 @@ https://email-verification.eu-west-1.amazonaws.com/?AWSAccessKeyId=AKIAJQA2TSFQT
                 $state.go('signin');
             }
             var idUser = user[0].id;
-
+            var contactsEmails = new Array();
             var jsonEmail = {id: idUser};
-            var listsIds = [];
-            var contactsEmails = [];
             var valueEmail = parseFloat(SHIPPINGVALUE.email);
 
 
@@ -58,6 +59,7 @@ https://email-verification.eu-west-1.amazonaws.com/?AWSAccessKeyId=AKIAJQA2TSFQT
 
             socket.on('send:errorBalanceEmail', function (error) {
                 vm.balanceEmail = 0;
+                $scope.balanceEmail = 0;
                 toastr.error(error, 'Error');
             });
 
@@ -66,123 +68,18 @@ https://email-verification.eu-west-1.amazonaws.com/?AWSAccessKeyId=AKIAJQA2TSFQT
                 if (data === "Nao foi encontrado creditos para este usuario" ||
                     data === "parametro invalido") {
                     vm.balanceEmail = 0;
+                    $scope.balanceEmail = 0;
                 } else {
                     vm.balanceEmail = parseFloat(data.split(':')[1].split('}')[0]);
+                    $scope.balanceEmail = parseFloat(data.split(':')[1].split('}')[0]);
                 }
 
             });
 
-            $scope.someFunction = function (item) {
-                showContactList(item.id);
-                vm.disableSelect = true
-            };
 
-            vm.removed = function (itemSelect, model) {
-                vm.disableSelect = true;
-                contactsEmails = [];
-                if (vm.listsIds.length > 0) {
-                    angular.forEach(vm.listsIds, function (value1, key1) {
-                        showContactList(value1.id);
-                    });
-                } else {
-                    vm.totalEmails = 0;
-                    vm.totalPayable = 0;
-                    vm.disableSelect = false;
-                }
-            };
-
-            function showContactList(listId) {
-                ListEmailListContactsService.showContactList(listId)
-                    .then(function (res) {
-                        countEmails(res.recipients);
-                    }, function (data) {
-                        //printConsole("ERROR");
-                        //modal();
-                    })
-            };
-
-            function _create() {
-                vm.list_ids = [];
-                for (var i = 0; i < vm.listsIds.length; i++) {
-                    vm.list_ids.push(vm.listsIds[i].id);
-                }
-                var json =
-                    {
-                        "title": vm.advertising.title,
-                        "subject": vm.advertising.subject,
-                        "sender_id": 100787,
-                        "list_ids": vm.list_ids,
-                        "categories": [
-                            "spring line"
-                        ],
-                        "suppression_group_id": 2321,
-                        "custom_unsubscribe_url": "",
-                        "html_content": vm.advertising.html_content + "<a href='[unsubscribe]'> Click Here to Unsubscribe</a>",
-                        "plain_content": "Check out our spring line! [unsubscribe]"
-                    };
-
-                AddAdvertisingService.createCampaigns(json)
-                    .then(function (res) {
-                        if (res.id > 0) {
-                            toastr.success('Campanha criada com sucesso!');
-                            $state.go('home.email.listEmailAdvertising');
-                        } else {
-                            toastr.error("Erro ao criar campanha", 'Error');
-                        }
-
-                    }, function (data) {
-                        toastr.error("Erro ao criar campanha", 'Error');
-                        //printConsole("ERROR");
-                        //modal();
-                    })
-            }
-
-            function countEmails(contact) {
-                angular.forEach(contact, function (value1, key1) {
-                    contactsEmails.push(value1.email);
-                });
-
-                contactsEmails = unique(contactsEmails);
-                vm.totalEmails = contactsEmails.length;
-
-
-                vm.totalPayable = parseFloat((valueEmail * vm.totalEmails));
-                //printConsole(vm.totalPayable);
-                if (vm.totalPayable <= vm.balanceEmail) {
-                    vm.disableSend = false;
-                } else {
-                    vm.disableSend = true;
-                }
-                vm.disableSelect = false;
-            }
-
-            function unique(collection) {
-                var output = [],
-                    keys = [];
-
-                angular.forEach(collection, function (item) {
-                    // we check to see whether our object exists
-                    var key = item;
-                    // if it's not already part of our keys array
-                    if (keys.indexOf(key) === -1) {
-                        // add it to our keys array
-                        keys.push(key);
-                        // push this item to our final output array
-                        output.push(item);
-                    }
-                });
-                // return our array which should be devoid of
-                // any duplicates
-                return output;
-            }
-
-
-            ListEmailListContactsService.listAll()
+            ListEmailListContactsService.listAll(idUser)
                 .then(function (res) {
-                    vm.contactsLists = res.lists;
-                    $scope.listA = vm.contactsLists;
-                    $scope.items = vm.contactsLists;
-                    //printConsole(vm.contactsLists);
+                    vm.contactsLists = JSON.parse(res);
                     vm.placeholderSelect = "Selecione listas de contato";
                     vm.disableSelect = false;
                 }, function (data) {
@@ -190,47 +87,147 @@ https://email-verification.eu-west-1.amazonaws.com/?AWSAccessKeyId=AKIAJQA2TSFQT
                     //printConsole("ERROR");
                     //modal();
                 });
+            var updateSelected = function (action, id) {
+                if (action == 'add' & $scope.selected.indexOf(id) == -1) $scope.selected.push(id);
+                if (action == 'remove' && $scope.selected.indexOf(id) != -1) $scope.selected.splice($scope.selected.indexOf(id), 1);
+                console.log($scope.selected);
+                getContatosLista($scope.selected);
+            };
 
-
-            vm.createListSms = _createListSms;
-
-
-            function _createListSms() {
-                //printConsole("_createListSms");
+            function _selectItem($event, id) {
+                var checkbox = $event.target;
+                var action = (checkbox.checked ? 'add' : 'remove');
+                updateSelected(action, id);
             }
 
-            function sendAwsSes () {
+            $scope.selected = [];
+            $scope.isSelected = function (id) {
+                return $scope.selected.indexOf(id) >= 0;
+            };
 
-                var arrayListContacts = ["ricardommps@gmail.com","ricardommps@gmail.com","ricardomatta@outlook.com","ricardommps@g","elvis@conektta.com"];
-                var from = vm.advertising.name + "<" + vm.advertising.from + ">";
-                var eparam = {
-                    Destination: {
-                        ToAddresses: arrayListContacts
-                    },
-                    Message: {
-                        Body: {
-                            Html: {
-                                Data: vm.advertising.html_content
-                            },
-                            Text: {
-                                Data: "Hello, this is a test email!"
-                            }
+            function _getCampanha() {
+                var cost = parseFloat(vm.totalPayable).toFixed(2);
+                var saveJson =
+                    {
+                        "id_dono_campanha": idUser,
+                        "List_Contatos": {
+                            "id_listas": $scope.selected
                         },
-                        Subject: {
-                            Data: vm.advertising.subject
+                        "Name": vm.advertising.title,
+                        "Status": "",
+                        "Sender": vm.advertising.nome,
+                        "From": vm.advertising.from,
+                        "Reply": vm.advertising.reply,
+                        "Message": {
+                            "Body": {
+                                "Html": {
+                                    "Data": vm.advertising.html_content
+                                },
+                                "Text": {
+                                    "Data": "Hello, this is a test email!"
+                                }
+                            },
+                            "Subject": {
+                                "Data": vm.advertising.subject
+                            },
+                            "cost": cost
                         }
-                    },
-                    Source: "Bokarra Club<elvis@conektta.com.br>",
-                    ReplyToAddresses: ["elvis@conektta.com.br"],
-                    ReturnPath: "elvis@conektta.com.br"
-                };
+                    };
+
+                SendEmailAdvertisingService.createCampaigns(saveJson)
+                    .then(function (res) {
+                        if (res.success) {
+                            if (res.reponse === "Campanha gravada com sucesso") {
+                                toastr.success(res.reponse);
+                                $state.go('home.email.listEmailAdvertising');
+                            }
+                        } else {
+                            toastr.error("Erro ao criar campanha", 'Error');
+                        }
+
+                    }, function (data) {
+                        toastr.error("Erro ao criar campanha", 'Error');
+                    })
+            }
+
+            function _sendAwsSes() {
+
+                var from = vm.advertising.name + "<" + vm.advertising.from + ">";
+                console.log(from);
+                var cost = parseFloat(vm.totalPayable).toFixed(2);
+                var jsonSendEmail =
+                    {
+                        operation: [
+                            {
+                                id_usuario: idUser,
+                                id_tp_credito: '2',
+                                nr_pedido: '0',
+                                valor: vm.totalPayable,
+                                operacao: 'd'
+                            }
+                        ],
+                        create: [
+                            {
+                                "id_dono_campanha": idUser,
+                                "List_Contatos": {
+                                    "id_listas": $scope.selected
+                                },
+                                "Name": vm.advertising.title,
+                                "Status": "",
+                                "Sender": vm.advertising.nome,
+                                "From": vm.advertising.from,
+                                "Reply": vm.advertising.reply,
+                                "Message": {
+                                    "Body": {
+                                        "Html": {
+                                            "Data": vm.advertising.html_content
+                                        },
+                                        "Text": {
+                                            "Data": "Hello, this is a test email!"
+                                        }
+                                    },
+                                    "Subject": {
+                                        "Data": vm.advertising.subject
+                                    },
+                                    "cost": cost
+                                }
+                            }
+                        ],
+                        credits: vm.balanceEmail,
+                        email: [
+                            {
+                                Destination: {
+                                    BccAddresses: contactsEmails
+                                },
+                                Message: {
+                                    Body: {
+                                        Html: {
+                                            Data: vm.advertising.html_content
+                                        },
+                                        Text: {
+                                            Data: "Hello, this is a test email!"
+                                        }
+                                    },
+                                    Subject: {
+                                        Data: vm.advertising.subject
+                                    }
+                                },
+                                Source: from,
+                                ReplyToAddresses: [vm.advertising.reply],
+                                ReturnPath: vm.advertising.from
+                            }
+                        ]
+                    };
+                socket.emit('send:sendEmail', jsonSendEmail, function (res) {
+                    console.log(res);
+                    toastr.success('Campanha enviado com sucesso! Valor debitado: R$' + vm.totalPayable);
+                    $state.go('home.email.listEmailAdvertising');
+                });
             }
 
             function _send() {
                 vm.list_ids = [];
-                for (var i = 0; i < vm.listsIds.length; i++) {
-                    vm.list_ids.push(vm.listsIds[i].id);
-                }
+
                 var jsonSendEmail =
                     {
                         operation: [
@@ -262,126 +259,40 @@ https://email-verification.eu-west-1.amazonaws.com/?AWSAccessKeyId=AKIAJQA2TSFQT
 
 
                 socket.emit('send:sendEmail', jsonSendEmail, function (res) {
-                    if (res == "Scheduled") {
-                        toastr.success('Campanha enviado com sucesso! Valor debitado: R$' + vm.totalPayable);
-                        $state.go('home.emailMarketing.advertising');
-                    } else {
-                        toastr.error("Não foi possivel enviar a campanha.Verifique parâmetros obrigatório", 'Error');
-                    }
+                    toastr.success('Campanha enviado com sucesso! Valor debitado: R$' + vm.totalPayable);
+                    $state.go('home.emailMarketing.advertising');
                 });
 
             }
 
 
-            //// Pick List Functions
+            function getContatosLista(list) {
+                contactsEmails = new Array();
+                if (list.length > 0) {
+                    console.log("AKI");
+                    ListEmailListContactsService.getContatosLista(list)
+                        .then(function (res) {
+                            contactsEmails = res;
+                            vm.totalEmails = contactsEmails.length;
+                            $scope.totalEmails = contactsEmails.length;
+                            vm.totalPayable = parseFloat((valueEmail * vm.totalEmails));
+                            $scope.totalPayable = parseFloat((valueEmail * vm.totalEmails));
+                            console.log(totalEmails);
+                            if (vm.totalPayable <= vm.balanceEmail) {
+                                vm.disableSend = false;
+                            } else {
+                                vm.disableSend = true;
+                            }
+                            vm.disableSelect = false;
 
-            // init
-            $scope.selectedA = [];
-            $scope.selectedB = [];
-
-
-            $scope.listB = [];
-            $scope.checkedA = false;
-            $scope.checkedB = false;
-
-            function arrayObjectIndexOf(myArray, searchTerm, property) {
-                for (var i = 0, len = myArray.length; i < len; i++) {
-                    console.log(myArray[i]);
-                    if (myArray[i][property] === searchTerm) return i;
-                }
-                return -1;
-            }
-
-            $scope.aToB = function () {
-                //printConsole($scope.selectedA);
-                for (var i in $scope.selectedA) {
-                    var moveId = arrayObjectIndexOf($scope.items, $scope.selectedA[i], "id");
-                    $scope.listB.push($scope.items[moveId]);
-                    var delId = arrayObjectIndexOf($scope.listA, $scope.selectedA[i], "id");
-                    $scope.listA.splice(delId, 1);
-                }
-                reset();
-
-            };
-            $scope.checkedA = false;
-            $scope.checkedB = false;
-            $scope.selectedAClick = function (item) {
-                if (item.checked) {
-                    $scope.selectedA.push(item.id);
+                        }, function (data) {
+                            //printConsole("ERROR");
+                            //modal();
+                        })
                 } else {
-                    var index = $scope.selectedA.indexOf(item.id);
-                    $scope.selectedA.splice(index, 1);
-                }
-                //printConsole($scope.selectedA);
-            };
-
-            $scope.selectedBClick = function (item) {
-                if (item.checked) {
-                    $scope.selectedA.push(item.id);
-                } else {
-                    var index = $scope.selectedA.indexOf(item.id);
-                    $scope.selectedA.splice(index, 1);
-                }
-                //printConsole($scope.selectedA);
-            };
-
-            $scope.bToA = function () {
-                for (var i in $scope.selectedB) {
-                    var moveId = arrayObjectIndexOf($scope.items, $scope.selectedB[i], "id");
-                    $scope.listA.push($scope.items[moveId]);
-                    var delId = arrayObjectIndexOf($scope.listB, $scope.selectedB[i], "id");
-                    $scope.listB.splice(delId, 1);
-                }
-                reset();
-
-            };
-
-            function reset() {
-                $scope.selectedA = [];
-                $scope.selectedB = [];
-                $scope.toggle = 0;
-
-
-            }
-
-            $scope.toggleA = function () {
-
-                if ($scope.selectedA.length > 0) {
-                    $scope.selectedA = [];
-                }
-                else {
-                    for (var i in $scope.listA) {
-                        $scope.selectedA.push($scope.listA[i].id);
-                    }
+                    vm.totalPayable = 0;
                 }
             }
-
-            $scope.toggleB = function () {
-
-                if ($scope.selectedB.length > 0) {
-                    $scope.selectedB = [];
-                }
-                else {
-                    for (var i in $scope.listB) {
-                        $scope.selectedB.push($scope.listB[i].id);
-                    }
-                }
-            }
-
-            $scope.drop = function (dragEl, dropEl, direction) {
-
-                var drag = angular.element(dragEl);
-                var drop = angular.element(dropEl);
-                var id = drag.attr("data-id");
-                var el = document.getElementById(id);
-
-                if (!angular.element(el).attr("checked")) {
-                    angular.element(el).triggerHandler('click');
-                }
-
-                direction();
-                $scope.$digest();
-            };
 
 
             function _verifyEmailIdentity() {
@@ -389,13 +300,13 @@ https://email-verification.eu-west-1.amazonaws.com/?AWSAccessKeyId=AKIAJQA2TSFQT
                     .then(function (res) {
                         try {
                             console.log(res.data.ResponseMetadata.RequestId.length);
-                            if(res.data.ResponseMetadata.RequestId.length > 0){
+                            if (res.data.ResponseMetadata.RequestId.length > 0) {
                                 $state.go("home.email.successEmailIdentity");
-                            }else{
+                            } else {
                                 toastr.error("Não foi possivel verificar seu E-mail", 'Error');
                             }
                         }
-                        catch(err) {
+                        catch (err) {
                             toastr.error("Não foi possivel verificar seu E-mail", 'Error');
                         }
 

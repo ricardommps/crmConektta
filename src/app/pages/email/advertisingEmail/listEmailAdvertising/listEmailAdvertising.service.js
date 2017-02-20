@@ -12,9 +12,15 @@
         };
         return vm.service;
 
-        function campaigns() {
+        function campaigns(idUser) {
             var def = $q.defer();
-            $http.get(API_CRM.url+"campaigns")
+            var user ={
+                idUser : idUser
+            };
+
+            $http.get(API_CRM.url+"email/campaigns",{
+                params: user
+            })
                 .then(function(res){
                     def.resolve(res.data);
 

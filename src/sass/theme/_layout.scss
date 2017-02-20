@@ -452,3 +452,17 @@ form[role=login] img {
   -webkit-transform: translate3d(0, 0px, 0);
   transform: translate3d(0, 0px, 0);
 }
+
+.modal{
+  display: block !important; /* I added this to see the modal, you don't need this */
+  overflow-y: hidden;
+}
+
+/* Important part */
+.modal-dialog{
+  overflow-y: hidden !important
+}
+.modal-body{
+ // height: 600px;
+  overflow-y: hidden;
+}

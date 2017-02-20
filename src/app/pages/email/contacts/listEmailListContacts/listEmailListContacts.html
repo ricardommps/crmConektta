@@ -1,7 +1,40 @@
-<div ng-if="vm.contactsLists.length <1">
-    <h3>Carregando informaçoes...</h3>
+<div class="modal-buttons same-width clearfix">
 </div>
-
-<div class="list-group" ng-repeat="item in vm.contactsLists" style="margin-bottom: 0px;">
-    <a href="" ng-click="vm.openModal(item)" class="list-group-item list-group-item-success">{{item.name}}</a>
+<div ng-if="!vm.contactsLists">
+    Carregando informações...
+</div>
+<div ba-panel ba-panel-title="Lista de Contatos" ba-panel-class="with-scroll" ng-if="vm.contactsLists">
+    <div class="table-container">
+        <table class="table" st-table="vm.contactsLists" >
+            <thead>
+            <tr class="sortable ">
+                <th style="text-align: left;">ID</th>
+                <th style="text-align: left;">Nome</th>
+                <th>Ação</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr st-select-row="row" st-select-mode="multiple"
+                ng-repeat="row in vm.contactsLists">
+                <td style="text-align: left;">{{row.id}}</td>
+                <td style="text-align: left;">{{row.nome_lista}}</td>
+                <td style="text-align: left;">
+                    <div class="row" ng-if="row.status === 'Draft'">
+                        <button type="button" class="btn defaut btn-sm" ng-click="vm.sendEmail(row)">
+                            <span class="glyphicon glyphicon-send"></span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="6" class="text-center">
+                    <div st-pagination="" st-items-by-page="vm.smartTablePageSize" st-displayed-pages="5"></div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+        <button type="button" class="btn btn-info" ng-click = vm.openSaveModal()>Criar Lista</button>
+    </div>
 </div>

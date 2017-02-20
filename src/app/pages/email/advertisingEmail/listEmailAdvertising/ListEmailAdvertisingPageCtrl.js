@@ -79,9 +79,11 @@
         }
 
         function listCampaigns() {
-            ListEmailAdvertisingService.campaigns()
+            ListEmailAdvertisingService.campaigns(idUser)
                 .then(function(res) {
-                    vm.campaigns = res.result;
+                    var jsonRes = JSON.parse(res);
+                    vm.campaigns = jsonRes.data;
+                    console.log(vm.campaigns);
                     vm.displayCampaigns = true
                     vm.displayCampaignsError = false;
 

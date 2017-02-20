@@ -1,40 +1,48 @@
-<div ng-if="!vm.displayContcts && !vm.displayContctsError">
+<div class="modal-buttons same-width clearfix">
+</div>
+<div ng-if="!vm.contacts && !vm.contactsError">
     Carregando informações...
 </div>
-
-<div class="table-container" ng-if="vm.displayContcts && !vm.displayContctsError">
-    <table class="table" st-table="vm.contacts" >
-        <thead>
-        <tr class="sortable ">
-            <th class="table-id" st-sort="id" st-sort-default="true">#</th>
-            <th st-sort="first_name">Nome</th>
-            <th st-sort="last_name">Sobrenome</th>
-            <th st-sort="email">Email</th>
-            <th st-sort="birthday">Data Nasc.</th>
-            <th st-sort="gender">Genero</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr st-select-row="row" st-select-mode="multiple"
-            ng-repeat="row in vm.contacts">
-            <td><input type="checkbox" ng-model="selected"
-                       ng-change="vm.changeValue(selected,row)"/></td>
-            <td>{{row.first_name}}</td>
-            <td>{{row.last_name}}</td>
-            <td>{{row.email}}</td>
-            <td>{{row.birthday}}</td>
-            <td>{{row.gender}}</td>
-        </tr>
-        </tbody>
-        <tfoot>
-        <tr>
-            <td colspan="6" class="text-center">
-                <div st-pagination="" st-items-by-page="vm.smartTablePageSize" st-displayed-pages="5"></div>
-            </td>
-        </tr>
-        </tfoot>
-    </table>
-    <button type="button" class="btn btn-info" ng-click = vm.openSaveModal()>Criar Lista</button>
-</div>
+<div ba-panel ba-panel-title="Lista de Contatos" ba-panel-class="with-scroll" ng-if="vm.contacts && !vm.contactsError">
+    <div class="table-container">
+        <table class="table" st-table="vm.contacts" >
+            <thead>
+            <tr class="sortable ">
+                <th style="text-align: left;">#</th>
+                <th st-sort="nome" style="text-align: left;">Nome</th>
+                <th st-sort="sobrenome" style="text-align: left;">Sobrenome</th>
+                <th st-sort="email" style="text-align: left;">Email</th>
+                <th>Ação</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr st-select-row="row" st-select-mode="multiple"
+                ng-repeat="row in vm.contacts">
+                <td style="text-align: left;">
+                    <input type="checkbox"
+                           ng-click="vm.selectItem($event, row.id)"
+                           ng-checked="isSelected(row.id)"/>
+                </td>
+                <td style="text-align: left;">{{row.nome}}</td>
+                <td style="text-align: left;">{{row.sobrenome}}</td>
+                <td style="text-align: left;">{{row.email}}</td>
+                <td style="text-align: left;">
+                    <div class="row" ng-if="row.status === 'Draft'">
+                        <button type="button" class="btn defaut btn-sm" ng-click="vm.sendEmail(row)">
+                            <span class="glyphicon glyphicon-send"></span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="6" class="text-center">
+                    <div st-pagination="" st-items-by-page="vm.smartTablePageSize" st-displayed-pages="5"></div>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+        <button type="button" class="btn btn-info" ng-click = vm.openSaveModal()>Criar Lista</button>
+    </div>
 </div>

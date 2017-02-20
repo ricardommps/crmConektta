@@ -11,8 +11,14 @@
         .controller('ListContactsEmailList', ListContactsEmailList);
 
     /** @ngInject */
-    function ListEmailListContactsPageCtrl( $scope, ListEmailListContactsService, $uibModal) {
+    function ListEmailListContactsPageCtrl( $scope, ListEmailListContactsService, $uibModal, $window) {
         //printConsole("ListEmailListContactsPageCtrl");
+        var user = JSON.parse($window.localStorage.getItem('conekttaUser'));
+        if(user === null){
+            $state.go('signin');
+        }
+        var idUser = user[0].id;
+
         var vm = this;
         vm.contactsLists =[];
         vm.viewContacts = _viewContacts;
@@ -36,9 +42,10 @@
         function _viewContacts(item) {
             //printConsole(item);
         }
-        ListEmailListContactsService.listAll()
+        ListEmailListContactsService.listAll(idUser)
             .then(function(res) {
-                vm.contactsLists = res.lists;
+                console.log(res);
+                vm.contactsLists = JSON.parse(res);
 
             },function(data) {
                 //printConsole("ERROR");

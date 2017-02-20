@@ -46,7 +46,7 @@
                                            placeholder="Assunto" ng-model="vm.advertising.subject"
                                            style="margin-bottom: 10px;">
                                     <input type="text" class="form-control compose-input default-color"
-                                           placeholder="De Nome" ng-model="vm.advertising.nome"
+                                           placeholder="De Nome" ng-model="vm.advertising.name"
                                            style="margin-bottom: 10px;">
                                     <input type="text" class="form-control compose-input default-color"
                                            placeholder="De Email" ng-model="vm.advertising.from"
@@ -62,47 +62,35 @@
                         <div class="form-group">
 
                             <!--/Pick List-->
-
-                            <div class="row">
-                                <div class="col-md-12 text-center"><h3>Pick List</h3></div>
-                                <div class="col-sm-4 col-sm-offset-1">
-                                    <div class="list-group" id="list1">
-                                        <a href="javascript:;" class="list-group-item active">Staff
-                                            <input title="Toggle all" ng-click="toggleA()" ng-model="toggle"
-                                                   value="{{toggle}}" type="checkbox" class="pull-right"></a>
-                                        <span ng-repeat="user in listA">
-                  <a href="javascript:;" data-id="{{user.id}}" x-lvl-draggable="true" class="list-group-item">{{user.name}}
-                    <input id="{{user.id}}" ng-click="selectedAClick(user)" name="selectedA[]"
-                           value="{{user.id}}" ng-checked="selectedA.indexOf(user.id) > -1"
-                           type="checkbox" class="pull-right" ng-model="user.checked">
-                  </a>
-                </span>
-                                    </div>
-                                </div><!--/col-4-->
-                                <div class="col-md-2 v-center text-center">
-                                    <div class="btn-group">
-                                        <button title="Send to list 1" class="btn btn-default" ng-click="bToA()"
-                                                id="btnA"><i class="glyphicon glyphicon-chevron-left"></i></button>
-                                        <button title="Send to list 2" class="btn btn-default" ng-click="aToB()"
-                                                id="btnB"><i class="glyphicon glyphicon-chevron-right"></i></button>
-                                    </div>
-                                </div><!--/col-2-->
-                                <div class="col-sm-4">
-                                    <div class="list-group" id="list2">
-                                        <a href="javascript:;" class="list-group-item active">Team Members
-                                            <input title="Toggle all" ng-click="toggleB()" ng-model="toggle"
-                                                   value="{{toggle}}" type="checkbox" class="pull-right">
-                                        </a>
-                                        <span ng-repeat="user in listB">
-                  <a href="javascript:;" data-id="{{user.id}}" class="list-group-item" x-lvl-draggable="true">{{user.name}}
-                    <input id="{{user.id}}" ng-click="selectedB.push(user.id)" name="selectedB[]" value="{{user.id}}"
-                           ng-checked="selectedB.indexOf(user.id) > -1" type="checkbox" class="pull-right">
-                  </a>
-                </span>
-                                    </div>
-                                </div><!--/col-4-->
-                            </div><!--/row-->
-
+                            <div class="table-container">
+                                <table class="table" st-table="vm.contactsLists" >
+                                    <thead>
+                                    <tr class="sortable ">
+                                        <th style="text-align: left;">#</th>
+                                        <th style="text-align: left;">Nome</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr st-select-row="row" st-select-mode="multiple"
+                                        ng-repeat="row in vm.contactsLists">
+                                        <td style="text-align: left;">
+                                            <input type="checkbox"
+                                                   ng-click="vm.selectItem($event, row.id)"
+                                                   ng-checked="isSelected(row.id)"/>
+                                        </td>
+                                        <td style="text-align: left;">{{row.nome_lista}}</td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <td colspan="6" class="text-center">
+                                            <div st-pagination="" st-items-by-page="vm.smartTablePageSize" st-displayed-pages="5"></div>
+                                        </td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                                <button type="button" class="btn btn-info" ng-click = vm.openSaveModal()>Criar Lista</button>
+                            </div>
 
                         </div>
                         <div>
@@ -134,14 +122,14 @@
                             <div class="col-md-6">
                                 <form>
                                     <div class="row">
-                                        <button type="button" class="btn btn-info" ng-click=vm.create()>Salvar e enviar
+                                        <button type="button" class="btn btn-info" ng-click=vm.getCampanha()>Salvar e enviar
                                             depois
                                         </button>
                                         <br>
                                     </div>
                                     <div class="row" style="margin-top: 10px;">
                                         <button type="button" class="btn btn-info"
-                                                ng-click=vm.send() ng-disabled="vm.disableSend" ng-if="!vm.disableSend">
+                                                ng-click=vm.sendAwsSes()>
                                             Enviar Campanha
                                         </button>
                                     </div>
@@ -160,7 +148,7 @@
                 <p>
                     Acompanhe quantas pessoas irão receber a sua campanha de E-mail Marketin
                 </p>
-                <h4 style="font-size: 15px;">{{vm.totalEmails}} pessoas</h4>
+                <h4 style="font-size: 15px;">{{totalEmails}} pessoas</h4>
                 <div class="progress">
                     <div class="progress-bar progress-bar-panel" role="progressbar" aria-valuenow="50" aria-valuemin="0"
                          aria-valuemax="100" style="width: 50%">
@@ -168,18 +156,17 @@
                     </div>
                 </div>
                 <h3>Orçamento</h3>
-                <h1>{{vm.totalPayable | currency:"R$"}}</h1>
+                <h1>{{totalPayable | currency:"R$"}}</h1>
                 <p>Este é o valor total para você enviar para o alcance.</p>
                 <div class="sidebar-stats">
                     <h3 style="color: #fff;">SEUS CRÉDITOS</h3>
                     <div class="sidebar-stats-lead text-primary" style="color: #fff;">
-                        <h1 style="font-size: 42px;">{{vm.balanceEmail | currency:"R$"}}</h1>
+                        <h1 style="font-size: 42px;">{{balanceEmail | currency:"R$"}}</h1>
                         <small class="text-success">
                         </small>
                     </div>
                 </div>
-
-
+                <buy-credit></buy-credit>
             </div>
         </div>
     </div>

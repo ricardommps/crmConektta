@@ -18,10 +18,16 @@
         return vm.service;
 
 
-        function listContacts() {
+        function listContacts(idUser) {
             var def = $q.defer();
-            $http.get(API_CRM.url+"wordConekttaApi/users")
+            var user ={
+                idUser : idUser
+            };
+            $http.get(API_CRM.url+"contactdb",{
+                params: user
+            })
                 .then(function(res){
+                    console.log(res);
                     //printConsole(res);
                     def.resolve(res);
 

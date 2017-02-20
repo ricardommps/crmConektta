@@ -1,0 +1,29 @@
+<div class="horizontal-scroll">
+  <table class="table table-hover" st-table="editableTableData">
+    <thead>
+    <tr class="sortable">
+      <th>Usuário</th>
+      <th>Idade</th>
+      <th>Status</th>
+      <th>Gênero</th>
+      <th>Visitas</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="item in connectedUsers">
+      <td>{{item.user}}</td>
+      <td>{{item.age}}</td>
+      <td>{{item.status}}</td>
+      <td>{{item.genre}}</td>
+      <td>{{item.visits}}</td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+      <td colspan="6" class="text-center">
+        <div st-pagination="" st-items-by-page="12" st-displayed-pages="5"></div>
+      </td>
+    </tr>
+    </tfoot>
+  </table>
+</div>

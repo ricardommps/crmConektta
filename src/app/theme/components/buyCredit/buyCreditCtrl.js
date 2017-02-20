@@ -9,12 +9,16 @@
         .controller('BuyCredit', BuyCredit);
 
     /** @ngInject */
-    function BuyCredit($scope) {
+    function BuyCredit($scope,$uibModal) {
         var vm = this;
         vm.buyCredit = _buyCredit;
 
         function _buyCredit() {
-            //printConsole("_buyCredit");
+            $uibModal.open({
+                animation: true,
+                templateUrl: "app/theme/components/buyCredit/iframeModal.html",
+                size: 'lg'
+            });
         }
 
     }
