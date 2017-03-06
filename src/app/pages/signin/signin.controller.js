@@ -5,7 +5,7 @@
     .controller('SignInCtrl', SignInCtrl);
 
     /** @ngInject */
-    function SignInCtrl($scope, $state, $window, $timeout, SigninService, toastr, $rootScope) {
+    function SignInCtrl($scope, $state, $window, $timeout, SigninService, toastr, $rootScope, socket) {
         var vm = this;
         vm.formdata = {};
         vm.signIn = _signIn;
@@ -21,7 +21,6 @@
             if(!form.$invalid) {
                 SigninService.login(vm.formdata)
                     .then(function (res) {
-                        console.log(res.token);
                         // var tokenPayload = jwtHelper.decodeToken(res.token);
                         // //printConsole(tokenPayload);
                         if (res.success) {
@@ -47,7 +46,8 @@
             var jsonObj = JSON.parse(user);
             jsonObj[0].password = "*******";
             localStorage.setItem("conekttaUser", JSON.stringify(jsonObj));
-            $state.go('home');
+            socket.emit('connection', user);
+            $state.go('home.dashboard');
         }
 
         function setUser(user) {

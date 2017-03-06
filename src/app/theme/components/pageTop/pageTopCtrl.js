@@ -13,9 +13,6 @@
       //  var idUser = user[0].id;
 
         var vm = this;
-        vm.value = "teste";
-        vm.signout = _signout;
-        vm.teste = teste;
         var userGender = user[0].gender;
         if(userGender == "f"){
             vm.gender = "Female"
@@ -24,16 +21,15 @@
         }else{
             vm.gender = "User"
         }
-        //printConsole(vm);
-        function teste() {
-            //printConsole("teste");
-        }
 
-        function _signout() {
-            //printConsole(">>>>");
+        $scope.signout = function() {
             localStorage.clear();
             $state.go('signin');
-        }
+        };
+
+        $scope.mySmartWifi = function() {
+            $state.go("home.mySmartWifi.establishments");
+        };
 
 
     }

@@ -13,7 +13,7 @@
         var vm = this;
         vm.service ={
             listContacts   : listContacts,
-            contactdb : contactdb
+            createLists : createLists
         };
         return vm.service;
 
@@ -23,12 +23,11 @@
             var user ={
                 idUser : idUser
             };
-            $http.get(API_CRM.url+"contactdb",{
+            $http.get(API_CRM.url+"usuariosSmartWifi",{
                 params: user
             })
                 .then(function(res){
                     console.log(res);
-                    //printConsole(res);
                     def.resolve(res);
 
                 },function(data) {
@@ -38,10 +37,10 @@
             return def.promise;
         }
 
-        function contactdb(jsonList) {
+        function createLists(jsonList) {
 
             var def = $q.defer();
-            $http.post(API_CRM.url+"contactdb",jsonList)
+            $http.post(API_CRM.url+"email/createLists",jsonList)
                 .then(function(res){
                     //printConsole(res);
                     def.resolve(res);

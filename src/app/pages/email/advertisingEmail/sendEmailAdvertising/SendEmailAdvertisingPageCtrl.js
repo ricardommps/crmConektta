@@ -15,6 +15,7 @@ https://email-verification.eu-west-1.amazonaws.com/?AWSAccessKeyId=AKIAJQA2TSFQT
                                               $rootScope,
                                               ListEmailListContactsService,
                                               credits,
+                                              $base64,
                                               socket,
                                               $window,
                                               SendEmailAdvertisingService,
@@ -37,13 +38,17 @@ https://email-verification.eu-west-1.amazonaws.com/?AWSAccessKeyId=AKIAJQA2TSFQT
             vm.getCampanha = _getCampanha;
             vm.verifyEmailIdentity = _verifyEmailIdentity;
             vm.selectItem = _selectItem;
+            vm.beefree = _beefree;
 
+            vm.template = "Simple";
+            vm.htmlTemplate = "";
             vm.totalPayable = 0;
             $scope.totalPayable = 0;
             vm.disableSend = true;
             vm.placeholderSelect = "Carregando Lista...";
             vm.disableSelect = true;
 
+            $rootScope.$broadcast("disableNext");
 
             var user = JSON.parse($window.localStorage.getItem('conekttaUser'));
             if (user === null) {
@@ -57,25 +62,43 @@ https://email-verification.eu-west-1.amazonaws.com/?AWSAccessKeyId=AKIAJQA2TSFQT
 
             socket.emit('send:balanceEmail', jsonEmail);
 
-            socket.on('send:errorBalanceEmail', function (error) {
-                vm.balanceEmail = 0;
-                $scope.balanceEmail = 0;
-                toastr.error(error, 'Error');
+            socket.on('send:errorBalanceEmail', function (error,userId) {
+               if(userId.id == idUser){
+                   vm.balanceEmail = 0;
+                   $scope.balanceEmail = 0;
+                   toastr.error(error, 'Error');
+               }
+
             });
 
-            socket.on('send:sucessBalanceEmail', function (data) {
-                console.log(data);
-                if (data === "Nao foi encontrado creditos para este usuario" ||
-                    data === "parametro invalido") {
-                    vm.balanceEmail = 0;
-                    $scope.balanceEmail = 0;
-                } else {
-                    vm.balanceEmail = parseFloat(data.split(':')[1].split('}')[0]);
-                    $scope.balanceEmail = parseFloat(data.split(':')[1].split('}')[0]);
+
+
+            socket.on('send:sucessBalanceEmail', function (data,userId) {
+                if(userId.id == idUser){
+                    if (data === "Nao foi encontrado creditos para este usuario" ||
+                        data === "parametro invalido") {
+                        vm.balanceEmail = 0;
+                        $scope.balanceEmail = 0;
+                    } else {
+                        vm.balanceEmail = parseFloat(data.split(':')[1].split('}')[0]);
+                        $scope.balanceEmail = parseFloat(data.split(':')[1].split('}')[0]);
+                    }
                 }
 
+
             });
 
+            socket.on('send:templateEmail', function (data) {
+                var user = data.user.split('cnk');
+                if(user[1] == idUser){
+                    vm.htmlTemplate = data.content;
+                    $rootScope.$broadcast("nextTab");
+                }else{
+                    user = null;
+                }
+
+
+            });
 
             ListEmailListContactsService.listAll(idUser)
                 .then(function (res) {
@@ -90,7 +113,6 @@ https://email-verification.eu-west-1.amazonaws.com/?AWSAccessKeyId=AKIAJQA2TSFQT
             var updateSelected = function (action, id) {
                 if (action == 'add' & $scope.selected.indexOf(id) == -1) $scope.selected.push(id);
                 if (action == 'remove' && $scope.selected.indexOf(id) != -1) $scope.selected.splice($scope.selected.indexOf(id), 1);
-                console.log($scope.selected);
                 getContatosLista($scope.selected);
             };
 
@@ -105,6 +127,15 @@ https://email-verification.eu-west-1.amazonaws.com/?AWSAccessKeyId=AKIAJQA2TSFQT
                 return $scope.selected.indexOf(id) >= 0;
             };
 
+            function _beefree() {
+
+                var thisIsAnObject = {foo:'bar'};
+                //var w =  $window.open('http://crm.conektta.info/editorEmail.html?user=cnk'+idUser + '&template=conektta1', '_blank');
+
+                var w =  $window.open('http://localhost:3000/editorEmail.html?user=cnk'+idUser + '&template=teste', '_blank');
+                w.myVariable = thisIsAnObject
+
+            }
             function _getCampanha() {
                 var cost = parseFloat(vm.totalPayable).toFixed(2);
                 var saveJson =
@@ -121,7 +152,7 @@ https://email-verification.eu-west-1.amazonaws.com/?AWSAccessKeyId=AKIAJQA2TSFQT
                         "Message": {
                             "Body": {
                                 "Html": {
-                                    "Data": vm.advertising.html_content
+                                    "Data": vm.htmlTemplate
                                 },
                                 "Text": {
                                     "Data": "Hello, this is a test email!"
@@ -153,7 +184,6 @@ https://email-verification.eu-west-1.amazonaws.com/?AWSAccessKeyId=AKIAJQA2TSFQT
             function _sendAwsSes() {
 
                 var from = vm.advertising.name + "<" + vm.advertising.from + ">";
-                console.log(from);
                 var cost = parseFloat(vm.totalPayable).toFixed(2);
                 var jsonSendEmail =
                     {
@@ -180,7 +210,7 @@ https://email-verification.eu-west-1.amazonaws.com/?AWSAccessKeyId=AKIAJQA2TSFQT
                                 "Message": {
                                     "Body": {
                                         "Html": {
-                                            "Data": vm.advertising.html_content
+                                            "Data": vm.htmlTemplate
                                         },
                                         "Text": {
                                             "Data": "Hello, this is a test email!"
@@ -202,7 +232,7 @@ https://email-verification.eu-west-1.amazonaws.com/?AWSAccessKeyId=AKIAJQA2TSFQT
                                 Message: {
                                     Body: {
                                         Html: {
-                                            Data: vm.advertising.html_content
+                                            Data: vm.htmlTemplate
                                         },
                                         Text: {
                                             Data: "Hello, this is a test email!"
@@ -219,7 +249,6 @@ https://email-verification.eu-west-1.amazonaws.com/?AWSAccessKeyId=AKIAJQA2TSFQT
                         ]
                     };
                 socket.emit('send:sendEmail', jsonSendEmail, function (res) {
-                    console.log(res);
                     toastr.success('Campanha enviado com sucesso! Valor debitado: R$' + vm.totalPayable);
                     $state.go('home.email.listEmailAdvertising');
                 });
@@ -269,7 +298,6 @@ https://email-verification.eu-west-1.amazonaws.com/?AWSAccessKeyId=AKIAJQA2TSFQT
             function getContatosLista(list) {
                 contactsEmails = new Array();
                 if (list.length > 0) {
-                    console.log("AKI");
                     ListEmailListContactsService.getContatosLista(list)
                         .then(function (res) {
                             contactsEmails = res;
@@ -277,7 +305,6 @@ https://email-verification.eu-west-1.amazonaws.com/?AWSAccessKeyId=AKIAJQA2TSFQT
                             $scope.totalEmails = contactsEmails.length;
                             vm.totalPayable = parseFloat((valueEmail * vm.totalEmails));
                             $scope.totalPayable = parseFloat((valueEmail * vm.totalEmails));
-                            console.log(totalEmails);
                             if (vm.totalPayable <= vm.balanceEmail) {
                                 vm.disableSend = false;
                             } else {
@@ -291,6 +318,9 @@ https://email-verification.eu-west-1.amazonaws.com/?AWSAccessKeyId=AKIAJQA2TSFQT
                         })
                 } else {
                     vm.totalPayable = 0;
+                    $scope.totalPayable = 0;
+                    vm.totalEmails = 0;
+                    $scope.totalEmails = 0;
                 }
             }
 
@@ -299,7 +329,6 @@ https://email-verification.eu-west-1.amazonaws.com/?AWSAccessKeyId=AKIAJQA2TSFQT
                 SendEmailAdvertisingService.verifyEmailIdentity(vm.advertising.from)
                     .then(function (res) {
                         try {
-                            console.log(res.data.ResponseMetadata.RequestId.length);
                             if (res.data.ResponseMetadata.RequestId.length > 0) {
                                 $state.go("home.email.successEmailIdentity");
                             } else {
@@ -312,7 +341,6 @@ https://email-verification.eu-west-1.amazonaws.com/?AWSAccessKeyId=AKIAJQA2TSFQT
 
 
                     }, function (data) {
-                        console.log(data);
                     })
             }
 
@@ -325,9 +353,7 @@ https://email-verification.eu-west-1.amazonaws.com/?AWSAccessKeyId=AKIAJQA2TSFQT
                 require: 'ngModel',
                 link: function (scope, elem, attr, ctrl) {
                     ctrl.$parsers.push(function (viewValue) {
-                        // set it to true here, otherwise it will not
-                        // clear out when previous validators fail.
-                        console.log(viewValue);
+
                         ctrl.$setValidity('emailAvailable', false);
 
                         if (viewValue && viewValue.match(/[a-z0-9\-_]+@[a-z0-9\-_]+\.[a-z0-9\-_]{2,}/)) {

@@ -1,0 +1,81 @@
+<div ba-panel ba-panel-title="Ativar um novo Smart Wifi" ba-panel-class="with-scroll">
+    <div class="col-md-12">
+        <div class="form-group row clearfix">
+            <label for="input01">Insira abaixo o código da sua licença</label>
+            <center>
+                <input type="text" class="form-control" id="inputEmail3"
+                       ng-model="vm.licenseCod" style="text-align: center;"
+                       license-Mask="teste" maxlength="9">
+                <button type="button" class="btn btn-primary btn-with-icon save-profile"
+                        ng-click="vm.queryLicense()">
+                    Ativar um ponto de acesso
+                </button>
+            </center>
+        </div>
+    </div>
+</div>
+
+<div ba-panel ba-panel-title="Meus pontos de acesso" ba-panel-class="with-scroll">
+    <div class="col-md-12">
+        <div ng-if="vm.estabelecimentos == 0">
+            <p class="ng-binding" style="padding: 20px;">Nenhum dado encontrado</p>
+        </div>
+        <div class="table-container" ng-if="vm.estabelecimentos.total > 0">
+            <table class="table" st-table="vm.campaigns">
+                <thead>
+                <tr class="sortable ">
+                    <th st-sort="nome_estabelecimento" style="text-align: left;">Ponto de acesso</th>
+                    <th st-sort="status" style="text-align: left;">Status</th>
+                    <th st-sort="valor" style="text-align: left;">Nº Serial</th>
+                    <th>Data de Ativação</th>
+                </tr>
+                <tr>
+                    <th>
+                        <input st-search="nome_estabelecimento" placeholder="Busca por titulo"
+                               class="input-sm form-control search-input"
+                               type="search"/>
+                    </th>
+                    <th>
+                        <input st-search="assunto" placeholder="Busca por assunto"
+                               class="input-sm form-control search-input"
+                               type="search"/>
+                    </th>
+                    <th>
+                        <input st-search="status" placeholder="Busca por status"
+                               class="input-sm form-control search-input"
+                               type="search"/>
+                    </th>
+                    <th>
+                        <input st-search="valor" placeholder="Busca por valor"
+                               class="input-sm form-control search-input"
+                               type="search"/>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr st-select-row="row" st-select-mode="multiple"
+                    ng-repeat="row in vm.campaigns">
+                    <td style="text-align: left;">{{row.nome_estabelecimento}}</td>
+                    <td style="text-align: left;">{{row.assunto}}</td>
+                    <td style="text-align: left;">{{row.status}}</td>
+                    <td style="text-align: left;">{{row.valor}}</td>
+                    <td style="text-align: left;">
+                        <div class="row" ng-if="row.status === 'Draft'">
+                            <button type="button" class="btn defaut btn-sm" ng-click="vm.sendEmail(row)">
+                                <span class="glyphicon glyphicon-send"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="6" class="text-center">
+                        <div st-pagination="" st-items-by-page="vm.smartTablePageSize" st-displayed-pages="5"></div>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>

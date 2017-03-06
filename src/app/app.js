@@ -3,6 +3,10 @@
 angular.module('BlurAdmin', [
     'ngAnimate',
     'base64',
+    'ui.utils.masks',
+    'ui.mask',
+    'ngMessages',
+    'googlechart',
     'btford.socket-io',
     'angular-jwt',
     'ui.bootstrap',
@@ -17,19 +21,16 @@ angular.module('BlurAdmin', [
     'ngJsTree',
     'ngFileUpload',
     'imageCropper',
-    'cloudinary',
     'constants',
     'angular-progress-button-styles',
     'BlurAdmin.socketService',
+    'BlurAdmin.editorEmailMk',
     'BlurAdmin.credits',
     'BlurAdmin.userInfo',
     'BlurAdmin.theme',
     'BlurAdmin.signin',
     'BlurAdmin.pages'
 ])
-    .config(['$qProvider', function ($qProvider) {
-        $qProvider.errorOnUnhandledRejections(false);
-    }])
 
     .run(function ($rootScope, $state, $window, jwtHelper) {
 
@@ -37,7 +38,7 @@ angular.module('BlurAdmin', [
 
 
             var token = $window.localStorage.getItem('conektta');
-
+            console.log(token);
             if (token === null) {
                 $state.go('signin');
             }

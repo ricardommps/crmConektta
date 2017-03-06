@@ -19,8 +19,6 @@
             $state.go('signin');
         }
         var idUser = user[0].id;
-        console.log(idUser);
-
         var jsonEmail = {id: idUser};
         var contactsEmails = [];
         var valueEmail = parseFloat(SHIPPINGVALUE.email);
@@ -29,10 +27,8 @@
         function listSendSms() {
             ListSmsAdvertisingService.listSendSms(idUser)
                 .then(function(res) {
-                    console.log(res);
                     var jsonRes = JSON.parse(res);
                     vm.campaigns = jsonRes.data;
-                    console.log(vm.campaigns);
                     vm.displayCampaigns = true
                     vm.displayCampaignsError = false;
 

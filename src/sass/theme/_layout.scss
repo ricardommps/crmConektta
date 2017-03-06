@@ -145,7 +145,7 @@ a {
 }
 
 .al-content {
-  padding: 8px 32px 8px 40px;
+  padding: 10px 32px 8px 40px;
 }
 
 @media screen and (max-width: $resXS) {
@@ -364,17 +364,33 @@ md-content[flex] {
 .login-form {
   font: 16px/2em Lato, serif;
   margin: 100px auto;
-  max-width: 600px;
+  max-width: 450px;
   padding: 34px;
+}
+
+.login-itens{
+  padding-top: 60px;
+}
+.login-p-solucoes{
+  text-align: center;
+  padding-top: 30px;
+}
+
+.login-img-solucoes {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  /* padding: 30px; */
 }
 
 form[role=login] {
   color: #5d5d5d;
-  background: #f2f2f2;
+  background: #fff;
   padding: 26px;
-  border-radius: 10px;
+  border-bottom: 3px solid #80ab38 !important;
+  /*border-radius: 10px;
   -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
+  -webkit-border-radius: 10px;*/
 }
 
 form[role=login] img {
@@ -390,12 +406,14 @@ form[role=login] img {
 }
 
 .logo-login {
-  margin-top: 50px !important;
-  margin-bottom: 50px !important;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 30px;
 }
 
 .pageLogin{
-  background: #1e3e8e;
+  //background: #1e3e8e;
   width: 100%;
   height: 100%;
 }
@@ -453,6 +471,19 @@ form[role=login] img {
   transform: translate3d(0, 0px, 0);
 }
 
+.conektta-button{
+  font-size: 20px;
+  color: #fff;
+  background: #80ab38 !important;
+  border-color: #80ab38 !important;
+}
+
+.conektta-button:hover {
+  -webkit-transform: translate3d(0, 0px, 0);
+  transform: translate3d(0, 0px, 0);
+  color: #fff;
+}
+
 .modal{
   display: block !important; /* I added this to see the modal, you don't need this */
   overflow-y: hidden;
@@ -465,4 +496,127 @@ form[role=login] img {
 .modal-body{
  // height: 600px;
   overflow-y: hidden;
+}
+
+.ui.five.cards {
+  margin-left: -.75em;
+  margin-right: -.75em;
+}
+
+
+
+.ui.cards {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin: -.875em -.5em;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+
+
+.ui.five.cards>.card {
+  width: calc(20% - 1.5em);
+  margin-left: .75em;
+  margin-right: .75em;
+}
+
+.ui.card>.image, .ui.cards>.card>.image {
+  position: relative;
+  display: block;
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  padding: 0;
+  background: rgba(0,0,0,.05);
+}
+
+.ui.card>:first-child, .ui.cards>.card>:first-child {
+  border-radius: .28571429rem .28571429rem 0 0!important;
+  border-top: none!important;
+}
+
+.ui.card>.image:not(.ui)>img, .ui.cards>.card>.image:not(.ui)>img {
+  border: none;
+}
+
+.ui.card>.image>img, .ui.cards>.card>.image>img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: inherit;
+}
+
+.ui.card>.content, .ui.cards>.card>.content {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  border: none;
+  border-top: 1px solid rgba(34,36,38,.1);
+  background: 0 0;
+  margin: 0;
+  padding: 1em;
+  box-shadow: none;
+  font-size: 1em;
+  border-radius: 0;
+}
+
+.ui.card, .ui.cards>.card {
+  max-width: 100%;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 290px;
+  min-height: 0;
+  background: #FFF;
+  padding: 0;
+  border: none;
+  border-radius: .28571429rem;
+  box-shadow: 0 1px 3px 0 #D4D4D5, 0 0 0 1px #D4D4D5;
+  -webkit-transition: box-shadow .1s ease,-webkit-transform .1s ease;
+  transition: box-shadow .1s ease,-webkit-transform .1s ease;
+  transition: box-shadow .1s ease,transform .1s ease;
+  transition: box-shadow .1s ease,transform .1s ease,-webkit-transform .1s ease;
+  z-index: '';
+}
+
+.ui.header:first-child {
+  margin-top: -.14285em;
+}
+
+h1.ui.header {
+  font-size: 2rem;
+}
+
+.ui.header {
+  border: none;
+  margin: calc(2rem - .14285em) 0 1rem;
+  padding: 0;
+  font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
+  font-weight: 700;
+  line-height: 1.2857em;
+  text-transform: none;
+  color: rgba(0,0,0,.87);
+}
+
+.chart {
+  width: 100%;
+  min-height: 450px;
+}
+
+.filterEstatisticas{
+  padding: 0px 20px 20px 0px;
+  float: right;
 }

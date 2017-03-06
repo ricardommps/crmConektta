@@ -15,7 +15,9 @@
         <img ng-src="{{::( vm.gender | profilePicture )}}" style="background-color: #fff;">
       </a>
       <ul  class="top-dropdown-menu profile-dropdown" uib-dropdown-menu>
-        <li><a href="" class="signout" ng-click="vm.teste()"><i class="fa fa-power-off"></i>Sign out {{vm.value}}</a></li>
+        <li><a href ng-click="mySmartWifi()"><i class="fa fa-wifi"></i>My Smart Wifi</a></li>
+        <li><a href class="signout" ng-click="signout()"><i class="fa fa-power-off"></i>
+          Sair</a></li>
       </ul>
     </div>
     <msg-center></msg-center>

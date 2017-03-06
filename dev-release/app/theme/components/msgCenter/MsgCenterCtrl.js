@@ -41,10 +41,11 @@
           }
       });
 
-      socket.on('send:errorBalanceSms', function (error) {
-          //printConsole("send:errorBalanceSms");
-          //printConsole(error);
-          vm.balanceSms = 0;
+      socket.on('send:errorBalanceSms', function (error,userId) {
+          if(userId.id == idUser ){
+              vm.balanceSms = 0;
+          }
+
           //userInfo();
       });
 

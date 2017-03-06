@@ -9,9 +9,11 @@
         'ui.router',
         'BlurAdmin.signin',
         'BlurAdmin.pages.sides',
-        'BlurAdmin.pages.smartWifi',
         'BlurAdmin.pages.sms',
         'BlurAdmin.pages.email',
+        'BlurAdmin.pages.dashboard',
+        'BlurAdmin.pages.smartWifi',
+        'BlurAdmin.pages.mySmartWifi',
         'BlurAdmin.pages.ads'
     ])
         .config(routeConfig);

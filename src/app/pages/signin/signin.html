@@ -1,32 +1,38 @@
 <section class="container pageLogin">
     <section class="login-form">
+        <img ng-src="{{::( 'Conektta' | profilePicture )}}" class="img-responsive logo-login" alt="" />
         <form name="loginForm" novalidate role="login">
             <div class="center-block">
-                <img ng-src="{{::( 'Conektta' | profilePicture )}}" class="img-responsive logo-login" alt="" />
-
-                <h4>Novo por aqui?<a href="" ng-click="vm.register()" class="a-cadastro"> Cadastre-se</a></h4>
-
                 <div class="form-group" ng-class="{ 'has-error': loginForm.username.$touched && loginForm.username.$invalid }">
 
                     <input type="text" name="username" placeholder="Digite seu Usuário" required
-                           class="form-control" ng-model="vm.formdata.username"/>
+                           class="form-control-login" ng-model="vm.formdata.username"/>
 
                 </div>
 
                 <div class="form-group" ng-class="{ 'has-error': loginForm.password.$touched && loginForm.password.$invalid }">
-                    <input type="password" name="password" placeholder="Digite sua Senha" required class="form-control" ng-model="vm.formdata.password"/>
+                    <input type="password" name="password" placeholder="Digite sua Senha" required class="form-control-login" ng-model="vm.formdata.password"/>
                 </div>
 
                 <button type="submit"
-                        class="btn btn-lg btn-primary btn-block button-submit"
+                        class="btn btn-info buy-credit-button btn-block button-submit"
                         ng-click="vm.signIn(loginForm)" ng-disabled="loginForm.$invalid"
                         style="font-size: 16px;">
                     Entrar
                 </button>
-                <div class="text-right">
-                    <a href="#">Esqueceu sua senha?</a>
+                <div class="login-itens">
+                    <div class="text-center">
+                        <div class="row">
+                            <a href="#" style="color: black;">Esqueceu sua senha?</a>
+                        </div>
+                        <div class="row">
+                            <a href="" ng-click="vm.register()" style="color: black;">Criar uma conta</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
+        <p class="login-p-solucoes">Uma conta Conektta para você se conectar em tudo</p>
+        <img ng-src="{{::( 'Solutions' | profilePicture )}}" class="img-responsive login-img-solucoes" alt="" />
     </section>
 </section>

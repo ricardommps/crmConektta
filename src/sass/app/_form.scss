@@ -53,6 +53,18 @@
   }
 }
 
+.form-control-login {
+  color: $default-text;
+  @include placeholderStyle($default-text, 0.7);
+  border: none;
+  padding: 15px 10px;
+  border-bottom: 3px solid #80ab38 !important;
+  border-radius: 0px;
+  box-shadow: none;
+  width: 100%;
+
+}
+
 select.form-control {
   padding-left: 8px;
 }

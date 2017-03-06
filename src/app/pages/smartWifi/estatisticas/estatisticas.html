@@ -1,0 +1,77 @@
+<div ng-if="vm.error">
+    <div class="col-lg-12 col-md-12"
+         ba-panel ba-panel-title="" ba-panel-class="with">
+        <div class="row" style="text-align: center;">
+            <h3 class="ng-binding" style="padding: 20px;">{{vm.relatorio.error}}</h3>
+            <button type="button" class="btn conektta-button" ng-click=vm.openSaveModal()>Texto Aki
+            </button>
+        </div>
+    </div>
+</div>
+<div ng-if="!vm.error">
+
+    <div class="filterEstatisticas">
+        <label>P.A's: </label>
+        <select ng-model="vm.relatorio.pa" ng-options="pa as pa.mac_address for pa in vm.pas">
+        </select>
+        <label style="margin-left: 15px;">Mes: </label>
+        <select ng-model="vm.relatorio.months" ng-options="label for label in vm.months"></select>
+        <label style="margin-left: 15px;">Ano: </label>
+        <select ng-model="vm.relatorio.years" ng-options="label for label in vm.years"></select>
+        <button type="button" class="btn btn-info btn-xs"
+                ng-click="vm.sendRelatorios()" style="margin-left: 15px;">Aplicar
+        </button>
+    </div>
+    <div class="col-lg-12 col-md-12"
+         ba-panel ba-panel-title="Usuarios" ba-panel-class="with-scroll">
+        <div class="row" ng-if="vm.errorUsuarios">
+            <h2 class="ng-binding" style="padding: 20px;">{{vm.erroMsgUsuarios}}</h2>
+        </div>
+
+        <div class="row" ng-if="!vm.errorUsuarios">
+            <div class="col-md-9">
+                <column-chart data="vm.dataColumnsUsuarios" title=""
+                              width="{{ vm.widthColumnsChart}}" height="{{vm.heightColumnsChart}}"
+                              select="selectRow(selectedRowIndex)" class="chart" ng-if="vm.dataColumnsUsuarios">
+
+                </column-chart>
+            </div>
+            <div class="col-md-2">
+
+                <pie-chart data="vm.dataPieUsuarios" title=""
+                           width="{{ vm.widthPieChart}}" height="{{vm.heightPieChart}}"
+                           select="selectRow(selectedRowIndex)" class="chart" ng-if="vm.dataPieUsuarios">
+
+                </pie-chart>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-md-12"
+         ba-panel ba-panel-title="Usuarios por Gênero" ba-panel-class="with-scroll">
+        <div class="row" ng-if="vm.errorGender">
+            <h2 class="ng-binding" style="padding: 20px;">{{vm.erroMsgGender}}</h2>
+        </div>
+
+        <div class="row" ng-if="!vm.errorGender">
+            <div class="col-md-9">
+                <column-chart data="vm.dataColumnsGender" title=""
+                              width="{{ vm.widthColumnsChart}}" height="{{vm.heightColumnsChart}}"
+                              select="selectRow(selectedRowIndex)" class="chart" ng-if="vm.dataColumnsGender">
+
+                </column-chart>
+            </div>
+            <div class="col-md-2">
+
+                <pie-chart data="vm.dataPieGender" title=""
+                           width="{{ vm.widthPieChart}}" height="{{vm.heightPieChart}}"
+                           select="selectRow(selectedRowIndex)" class="chart" ng-if="vm.dataPieGender">
+
+                </pie-chart>
+
+            </div>
+        </div>
+    </div>
+
+</div>

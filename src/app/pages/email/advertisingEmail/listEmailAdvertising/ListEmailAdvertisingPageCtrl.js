@@ -39,18 +39,24 @@
 
         socket.emit('send:balanceEmail', jsonEmail);
 
-        socket.on('send:errorBalanceEmail', function (error) {
-            vm.balanceEmail = 0;
-            toastr.error(error, 'Error');
+        socket.on('send:errorBalanceEmail', function (error,userId) {
+            if(userId.id == idUser){
+                vm.balanceEmail = 0;
+                toastr.error(error, 'Error');
+            }
+
         });
 
-        socket.on('send:sucessBalanceEmail', function (data) {
-            if(data === "Nao foi encontrado creditos para este usuario" ||
-            data === "parametro invalido"){
-                vm.balanceEmail = 0;
-            }else{
-                vm.balanceEmail = parseFloat(data.split(':')[1].split('}')[0]);
+        socket.on('send:sucessBalanceEmail', function (data,userId) {
+            if(userId.id == idUser){
+                if(data === "Nao foi encontrado creditos para este usuario" ||
+                    data === "parametro invalido"){
+                    vm.balanceEmail = 0;
+                }else{
+                    vm.balanceEmail = parseFloat(data.split(':')[1].split('}')[0]);
+                }
             }
+
 
         });
 
@@ -83,7 +89,6 @@
                 .then(function(res) {
                     var jsonRes = JSON.parse(res);
                     vm.campaigns = jsonRes.data;
-                    console.log(vm.campaigns);
                     vm.displayCampaigns = true
                     vm.displayCampaignsError = false;
 

@@ -12,7 +12,6 @@ https://email-verification.eu-west-1.amazonaws.com/?AWSAccessKeyId=AKIAJQA2TSFQT
 
         function SuccessEmailIdentityPageCtrl($scope, $rootScope, $state) {
             var vm = this;
-            console.log("SuccessEmailIdentityPageCtrl");
 
         }
 

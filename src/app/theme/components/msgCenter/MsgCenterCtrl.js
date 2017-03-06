@@ -25,38 +25,45 @@
 
       userInfo();
 
-      socket.on('send:errorBalanceEmail', function (error) {
-          vm.balanceEmail = 0;
-          toastr.error(error, 'Error');
-      });
-
-      socket.on('send:sucessBalanceEmail', function (data) {
-          //printConsole("send:sucessBalanceEmail");
-          if(data === "Nao foi encontrado creditos para este usuario" ||
-            data === "parametro invalido"){
+      socket.on('send:errorBalanceEmail', function (error,userId) {
+          if(userId.id == idUser){
               vm.balanceEmail = 0;
-          }else{
-              //printConsole(data);
-              vm.balanceEmail = parseFloat(data.split(':')[1].split('}')[0]).toFixed(2);
+              toastr.error(error, 'Error');
           }
+
       });
 
-      socket.on('send:errorBalanceSms', function (error) {
-          //printConsole("send:errorBalanceSms");
-          //printConsole(error);
-          vm.balanceSms = 0;
+      socket.on('send:sucessBalanceEmail', function (data,userId) {
+          if(userId.id == idUser){
+              if(data === "Nao foi encontrado creditos para este usuario" ||
+                  data === "parametro invalido"){
+                  vm.balanceEmail = 0;
+              }else{
+                  //printConsole(data);
+                  vm.balanceEmail = parseFloat(data.split(':')[1].split('}')[0]).toFixed(2);
+              }
+          }
+
+      });
+
+      socket.on('send:errorBalanceSms', function (error,userId) {
+          if(userId.id == idUser){
+              vm.balanceSms = 0;
+          }
+
           //userInfo();
       });
 
-      socket.on('send:sucessBalanceSms', function (data) {
-          console.log("send:sucessBalanceSms");
-          console.log(data);
-          if(data === "Nao foi encontrado creditos para este usuario" ||
-              data === "parametro invalido"){
-              vm.balanceSms = 0;
-          }else{
-              vm.balanceSms = parseFloat(data.split(':')[1].split('}')[0]).toFixed(2);
+      socket.on('send:sucessBalanceSms', function (data,userId) {
+          if(userId.id == idUser){
+              if(data === "Nao foi encontrado creditos para este usuario" ||
+                  data === "parametro invalido"){
+                  vm.balanceSms = 0;
+              }else{
+                  vm.balanceSms = parseFloat(data.split(':')[1].split('}')[0]).toFixed(2);
+              }
           }
+
       });
 
 

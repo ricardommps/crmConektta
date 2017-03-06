@@ -24,8 +24,6 @@
                 params: user
             })
                 .then(function(res){
-                    console.log(res);
-                    //printConsole(res);
                     def.resolve(res);
 
                 },function(data) {

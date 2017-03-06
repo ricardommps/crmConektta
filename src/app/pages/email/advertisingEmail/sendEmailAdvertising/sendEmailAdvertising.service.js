@@ -10,9 +10,7 @@
         var vm = this;
         vm.service ={
             createCampaigns   : createCampaigns,
-            createAndSendEmailMk : createAndSendEmailMk,
             listAllContacts : listAllContacts,
-            sendCampaigns : sendCampaigns,
             listVerifiedEmailAddresses : listVerifiedEmailAddresses,
             verifyEmailIdentity : verifyEmailIdentity
         };
@@ -27,8 +25,6 @@
                 params: user
             })
                 .then(function(res){
-                    console.log(res);
-                    //printConsole(res);
                     def.resolve(res);
 
                 },function(data) {
@@ -48,7 +44,6 @@
                 params: email
             })
                 .then(function(res){
-                    console.log(res);
                     def.resolve(res);
 
                 },function(data) {
@@ -66,7 +61,6 @@
                 params: json
             })
                 .then(function(res){
-                    console.log(res);
                     def.resolve(res);
 
                 },function(data) {
@@ -77,38 +71,8 @@
 
         }
 
-        function sendCampaigns(json) {
-            var def = $q.defer();
-            $http.post(API_CRM.url+"sendCampaigns",json)
-                .then(function(res){
-                    def.resolve(res.data);
-
-                },function(data) {
-                    def.reject("Failed Send E-Mail");
-                });
-
-            return def.promise;
-        }
-
-
-
-        function createAndSendEmailMk(json) {
-            var def = $q.defer();
-            $http.post(API_CRM.url+"createAndSendEmailMk",json)
-                .then(function(res){
-                    def.resolve(res.data);
-
-                },function(data) {
-                    def.reject("Failed Send E-Mail");
-                })
-
-            return def.promise;
-        }
-
-
         function createCampaigns(json) {
             var def = $q.defer();
-            console.log(json);
             $http.post(API_CRM.url+"email/campaigns",json)
                 .then(function(res){
                     def.resolve(res.data);

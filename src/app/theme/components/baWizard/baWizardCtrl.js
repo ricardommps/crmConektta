@@ -5,7 +5,7 @@
     .controller('baWizardCtrl', baWizardCtrl);
 
   /** @ngInject */
-  function baWizardCtrl($scope) {
+  function baWizardCtrl($scope, $rootScope) {
     var vm = this;
     vm.tabs = [];
 
@@ -18,7 +18,13 @@
       vm.selectTab(0);
     };
 
-    $scope.$watch(angular.bind(vm, function () {return vm.tabNum;}), calcProgress);
+      $rootScope.$on("nextTab", function(){
+          vm.selectTab(vm.tabNum + 1);
+      });
+
+
+
+      $scope.$watch(angular.bind(vm, function () {return vm.tabNum;}), calcProgress);
 
     vm.selectTab = function (tabNum) {
       vm.tabs[vm.tabNum].submit();

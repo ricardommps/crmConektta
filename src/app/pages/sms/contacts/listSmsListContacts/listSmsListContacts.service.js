@@ -20,7 +20,7 @@
             var user ={
                 idUser : idUser
             };
-            $http.get(API_CRM.url+"showContactList/getListas",{
+            $http.get(API_CRM.url+"sms/getListas",{
                 params: user
             })
                 .then(function(res){
@@ -35,9 +35,7 @@
 
         function getContatosLista(idLists) {
             var def = $q.defer();
-
-            console.log(idLists);
-            $http.post(API_CRM.url+"showContactList/getContatosLista",idLists)
+            $http.post(API_CRM.url+"sms/contactsToList",idLists)
                 .then(function(res){
                     def.resolve(res.data);
 
@@ -53,7 +51,7 @@
             var user ={
                 idUser : idUser
             };
-            $http.get(API_CRM.url+"showContactList",{
+            $http.get(API_CRM.url+"sms/lists",{
                 params: user
             })
                 .then(function(res){

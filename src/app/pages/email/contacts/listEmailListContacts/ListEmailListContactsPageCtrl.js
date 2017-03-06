@@ -44,7 +44,6 @@
         }
         ListEmailListContactsService.listAll(idUser)
             .then(function(res) {
-                console.log(res);
                 vm.contactsLists = JSON.parse(res);
 
             },function(data) {

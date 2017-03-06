@@ -5,7 +5,7 @@
 (function () {
     'use strict';
 
-    angular.module('BlurAdmin.pages.smartWifi', [])
+    angular.module('BlurAdmin.pages.smartWifi', ['ui.select', 'ngSanitize'])
         .config(routeConfig);
 
     /** @ngInject */
@@ -15,19 +15,31 @@
                 url: '/smartWifi',
                 templateUrl: 'app/pages/smartWifi/smartWifi.html',
                 abstract: true,
-                title: 'SMART WIFI',
+                title: 'Smart Wifi',
                 sidebarMeta: {
-                    icon: 'ion-ios-location-outline',
-                    order: 120
-                }
+                    icon: 'ion-wifi',
+                    order: 120,
+                },
             })
-            .state('home.smartWifi.dashboard', {
-                url: '/dashboard',
-                templateUrl: 'app/pages/smartWifi/dashboard//dashboard.html',
-                title: 'PRINCIPAL',
+            .state('home.smartWifi.usuarios', {
+                url: '/usuarios',
+                templateUrl: 'app/pages/smartWifi/usuarios/usuarios.html',
+                controller: 'UsuariosPageCtrl',
+                controllerAs: 'vm',
+                title: 'Usuarios',
                 sidebarMeta: {
-                    order: 0
-                }
+                    order: 0,
+                },
+            })
+            .state('home.smartWifi.estatisticas', {
+                url: '/estatisticas',
+                templateUrl: 'app/pages/smartWifi/estatisticas/estatisticas.html',
+                controller: 'EstatisticasPageCtrl',
+                controllerAs: 'vm',
+                title: 'Estatísticas',
+                sidebarMeta: {
+                    order: 0,
+                },
             });
     }
 

@@ -35,7 +35,6 @@
         var updateSelected = function (action, id) {
             if (action == 'add' & $scope.selected.indexOf(id) == -1) $scope.selected.push(id);
             if (action == 'remove' && $scope.selected.indexOf(id) != -1) $scope.selected.splice($scope.selected.indexOf(id), 1);
-            console.log($scope.selected);
         };
 
         function _selectItem($event, id) {
@@ -63,7 +62,6 @@
                     }
                     //var json = JSON.parse(res);
                     vm.contacts = JSON.parse(res.data);
-                    console.log(vm.contacts);
                     vm.displayContcts = true;
                     vm.displayContctsError = false;
 
@@ -122,7 +120,7 @@
                 contatos : contacts
             };
 
-            CreateEmailListContactsService.contactdb(jsonList)
+            CreateEmailListContactsService.createLists(jsonList)
                 .then(function(res) {
                     if(res.status == "200"){
                         toastr.success('Lista de contatos criada com sucesso!');

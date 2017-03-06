@@ -17,7 +17,6 @@
             var user ={
                 idUser : idUser
             };
-            console.log(user);
             $http.get(API_CRM.url+"sms/campaigns",{
                 params: user
             })

@@ -1,0 +1,57 @@
+<div ba-panel ba-panel-title="Cadastrar ponto de acesso" ba-panel-class="with-scroll">
+    <div class="row">
+        <form name="register" ng-submit="vm.register(register.$valid)">
+            <div class="col-md-12">
+                <input type="text" class="form-control compose-input default-color"
+                       placeholder="Nome do estabelecimento" ng-model="vm.dataRegister.nome_estabelecimento"
+                       id="name" name="name"
+                       style="margin-bottom: 10px;">
+            </div>
+            <div class="col-md-6">
+                <input type="text" class="form-control compose-input default-color"
+                       placeholder="Endereço" ng-model="vm.dataRegister.endereco "
+                       id="endereco " name="endereco "
+                       style="margin-bottom: 10px;">
+
+                <input type="text" class="form-control compose-input default-color"
+                       placeholder="Telefone" ng-model="vm.dataRegister.phone_number "
+                       id="Phone_number " name="Phone_number "
+                       style="margin-bottom: 10px;">
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-6" style="padding-left: 0px;">
+                    <input type="text" class="form-control compose-input default-color"
+                           placeholder="Numero" ng-model="vm.dataRegister.address_number "
+                           id="number " name="number "
+                           style="margin-bottom: 10px;">
+
+                </div>
+
+                <div class="col-md-6" style="padding-left: 0px; padding-right: 0px;">
+                    <input type="text" class="form-control compose-input default-color"
+                           placeholder="Complemento" ng-model="vm.dataRegister.complemento  "
+                           id="complemento  " name="complemento  "
+                           style="margin-bottom: 10px;">
+
+                </div>
+                <div class="form-group" ng-class="{ 'has-error': register.email.$touched && register.email.$invalid }">
+                    <input type="email" class="form-control compose-input default-color"
+                           placeholder="Email" ng-model="vm.dataRegister.email "
+                           id="email " name="email "
+                           style="margin-bottom: 10px;" required>
+                    <div ng-messages="register.email.$error">
+                        <div ng-message="required">This field is required</div>
+                        <div ng-message="email">Your email address is invalid</div>
+                    </div>
+
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary btn-with-icon save-profile">
+                    Registrar
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>

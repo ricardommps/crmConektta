@@ -3,6 +3,49 @@
         <div class="col-md-9">
             <div ba-panel ba-panel-title="Criar uma campanha de E-mail Marketing" ba-panel-class="with-scroll">
                 <ba-wizard>
+                    <ba-wizard-step title="Remetente">
+                        <h1 class="ui header ng-scope" style="padding-bottom: 15px;">Selecione um modelo</h1>
+                        <div class="ui five link cards" style="max-width: 800px;">
+                            <div class="card" ng-click="vm.beefree()">
+                                <div class="image">
+                                    <img ng-src="{{::( vm.template | profilePicture )}}"">
+                                </div>
+                                <div class="content">
+                                    <h4 class="description">Modelo 1</h4>
+                                </div>
+                            </div>
+
+                            <div class="card" ng-click="vm.beefree()">
+                                <div class="image">
+                                    <img ng-src="{{::( vm.template | profilePicture )}}">
+                                </div>
+                                <div class="content">
+                                    <h4 class="description">Modelo 2</h4>
+                                </div>
+                            </div>
+
+                            <div class="card" ng-click="vm.beefree()">
+                                <div class="image">
+                                    <img ng-src="{{::( vm.template | profilePicture )}}">
+                                </div>
+                                <div class="content">
+                                    <h4 class="description">Modelo 3</h4>
+                                </div>
+                            </div>
+
+                            <div class="card" ng-click="vm.beefree()">
+                                <div class="image">
+                                    <img ng-src="{{::( vm.template | profilePicture )}}">
+                                </div>
+                                <div class="content">
+                                    <h4 class="description">Modelo 4</h4>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </ba-wizard-step>
+
                     <ba-wizard-step title="Remetente" form="vm.verifiedEmailAddresses">
                         <form name="vm.verifiedEmailAddresses" novalidate>
                             <div>
@@ -42,18 +85,18 @@
                                            placeholder="Nome da campanha" ng-model="vm.advertising.title"
                                            style="margin-bottom: 10px;">
                                 </div>
-                                    <input type="text" class="form-control compose-input default-color"
-                                           placeholder="Assunto" ng-model="vm.advertising.subject"
-                                           style="margin-bottom: 10px;">
-                                    <input type="text" class="form-control compose-input default-color"
-                                           placeholder="De Nome" ng-model="vm.advertising.name"
-                                           style="margin-bottom: 10px;">
-                                    <input type="text" class="form-control compose-input default-color"
-                                           placeholder="De Email" ng-model="vm.advertising.from"
-                                           style="margin-bottom: 10px;">
-                                    <input type="text" class="form-control compose-input default-color"
-                                           placeholder="Reply-to Email" ng-model="vm.advertising.reply"
-                                           style="margin-bottom: 10px;">
+                                <input type="text" class="form-control compose-input default-color"
+                                       placeholder="Assunto" ng-model="vm.advertising.subject"
+                                       style="margin-bottom: 10px;">
+                                <input type="text" class="form-control compose-input default-color"
+                                       placeholder="De Nome" ng-model="vm.advertising.name"
+                                       style="margin-bottom: 10px;">
+                                <input type="text" class="form-control compose-input default-color"
+                                       placeholder="De Email" ng-model="vm.advertising.from"
+                                       style="margin-bottom: 10px;">
+                                <input type="text" class="form-control compose-input default-color"
+                                       placeholder="Reply-to Email" ng-model="vm.advertising.reply"
+                                       style="margin-bottom: 10px;">
 
                             </div>
                         </form>
@@ -63,7 +106,7 @@
 
                             <!--/Pick List-->
                             <div class="table-container">
-                                <table class="table" st-table="vm.contactsLists" >
+                                <table class="table" st-table="vm.contactsLists">
                                     <thead>
                                     <tr class="sortable ">
                                         <th style="text-align: left;">#</th>
@@ -84,28 +127,19 @@
                                     <tfoot>
                                     <tr>
                                         <td colspan="6" class="text-center">
-                                            <div st-pagination="" st-items-by-page="vm.smartTablePageSize" st-displayed-pages="5"></div>
+                                            <div st-pagination="" st-items-by-page="vm.smartTablePageSize"
+                                                 st-displayed-pages="5"></div>
                                         </td>
                                     </tr>
                                     </tfoot>
                                 </table>
-                                <button type="button" class="btn btn-info" ng-click = vm.openSaveModal()>Criar Lista</button>
+                                <button type="button" class="btn btn-info" ng-click=vm.openSaveModal()>Criar Lista
+                                </button>
                             </div>
 
                         </div>
                         <div>
 
-                        </div>
-
-                    </ba-wizard-step>
-
-                    <ba-wizard-step title="Customização">
-                        <div class="compose-container">
-                            <text-angular-toolbar ta-toolbar-class="toolbarMain" name="toolbarMain"
-                                                  ta-toolbar="[['h1','h2','h3','bold','italics', 'underline', 'justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull']]"></text-angular-toolbar>
-                            <text-angular name="htmlcontent" ta-target-toolbars='toolbarMain,toolbarFooter'
-                                          ng-model="vm.advertising.html_content"
-                                          placeholder="Descrição"></text-angular>
                         </div>
 
                     </ba-wizard-step>
@@ -122,7 +156,8 @@
                             <div class="col-md-6">
                                 <form>
                                     <div class="row">
-                                        <button type="button" class="btn btn-info" ng-click=vm.getCampanha()>Salvar e enviar
+                                        <button type="button" class="btn btn-info" ng-click=vm.getCampanha()>Salvar e
+                                            enviar
                                             depois
                                         </button>
                                         <br>
